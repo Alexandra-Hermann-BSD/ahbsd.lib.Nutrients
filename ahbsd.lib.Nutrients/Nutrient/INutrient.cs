@@ -12,7 +12,6 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-using System;
 using System.Globalization;
 using ahbsd.lib.Nutrients.Measurement;
 
@@ -24,7 +23,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// <remarks>
     /// The default measurements are in SI, for optional measurements the
     /// formulas must be defined in other classes.
-    /// <seealso cref="ahbsd.lib.Nutrients.Measurement"/>.
+    /// <seealso cref="Nutrients.Measurement"/>.
     /// The default names are international as well.
     /// </remarks>
     public interface INutrient
