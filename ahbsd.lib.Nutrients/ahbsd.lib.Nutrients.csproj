@@ -38,7 +38,6 @@ some versioning tool for nutrition data. </Description>
     <PackageReference Include="ahbsd.lib" Version="1.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.7" />
-    <PackageReference Include="System.Data.SQLite.Linq" Version="1.0.113" />
     <PackageReference Include="sqlite" Version="3.13.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.4" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.113.7" />

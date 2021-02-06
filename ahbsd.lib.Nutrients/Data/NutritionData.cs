@@ -18,7 +18,6 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.Data.SQLite.Generic;
-using System.Data.SQLite.Linq;
 using System.Linq;
 
 namespace ahbsd.lib.Nutrients.Data
@@ -26,15 +25,21 @@ namespace ahbsd.lib.Nutrients.Data
     /// <summary>
     /// A class to work with the data for Nutrition.
     /// </summary>
-    public class NutritionData : Container
+    public partial class NutritionData : Container
     {
         /// <summary>
         /// The connection string.
         /// </summary>
         private string connectionString;
 
+        /// <summary>
+        /// The default DataSource.
+        /// </summary>
         public readonly string DataSource;
 
+        /// <summary>
+        /// The default format for data-sources.
+        /// </summary>
         protected const string dataSourceFmt = "Data Source={0}.db";
 
         /// <summary>
@@ -43,7 +48,8 @@ namespace ahbsd.lib.Nutrients.Data
         public NutritionData()
             : base()
         {
-            DataSource = string.Format(dataSourceFmt, "nutrient");
+            connectionString = CreateDataSource("nutrient");
+            DataSource = connectionString;
             Initialize();
         }
 
@@ -54,7 +60,8 @@ namespace ahbsd.lib.Nutrients.Data
         public NutritionData(string database)
             : base()
         {
-            DataSource = string.Format(dataSourceFmt, database);
+            connectionString = CreateDataSource(database);
+            DataSource = connectionString;
             Initialize();
         }
 
@@ -63,10 +70,12 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         private void Initialize()
         {
-            // creating the database parts.
-            SQLiteConnection connection = new SQLiteConnection();
-            SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter();
+            SQLiteConnection connection;
+            SQLiteDataAdapter dataAdapter;
 
+            // creating the database parts.
+            connection = new SQLiteConnection(connectionString, true);
+            dataAdapter = new SQLiteDataAdapter();
 
 
             // adding the components to Components…
@@ -77,7 +86,6 @@ namespace ahbsd.lib.Nutrients.Data
             Connection.StateChange += Connection_StateChange;
             DataAdapter.FillError += DataAdapter_FillError;
             DataAdapter.RowUpdated += DataAdapter_RowUpdated;
-
 
         }
 
@@ -93,6 +101,7 @@ namespace ahbsd.lib.Nutrients.Data
         {
         }
 
+        #region implementation of INutritionData
         /// <summary>
         /// Happenes if the <see cref="ConnectionString"/> has changes.
         /// </summary>
@@ -123,9 +132,11 @@ namespace ahbsd.lib.Nutrients.Data
             {
                 bool wasConnected = false;
 
-                if (string.IsNullOrEmpty(value) && !value.Equals(connectionString))
+                if (!string.IsNullOrEmpty(value)
+                    && !value.Equals(connectionString))
                 {
-                    ChangeEventArgs<string> cea = new ChangeEventArgs<string>(connectionString, value);
+                    ChangeEventArgs<string> cea
+                        = new ChangeEventArgs<string>(connectionString, value);
 
                     if (Connection.State == ConnectionState.Open)
                     {
@@ -150,5 +161,23 @@ namespace ahbsd.lib.Nutrients.Data
                 }
             }
         }
+        #endregion
+
+        /// <summary>
+        /// Creates a DataSource.
+        /// </summary>
+        /// <param name="dbName">The name of the database.</param>
+        /// <returns>The created DataSource.</returns>
+        public static string CreateDataSource(string dbName)
+        {
+            SQLiteConnectionStringBuilder sb;
+
+            sb = new SQLiteConnectionStringBuilder(string.Format(dataSourceFmt, dbName));
+            sb.JournalMode = SQLiteJournalModeEnum.Default;
+            sb.SyncMode = SynchronizationModes.Full;
+
+            return sb.ToString();
+        }
+
     }
 }
