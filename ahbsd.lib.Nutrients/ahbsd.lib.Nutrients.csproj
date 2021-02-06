@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageId>ahbsd.lib.Nutrients_Core3.1</PackageId>
+    <PackageVersion>1.0</PackageVersion>
+    <Authors>Heinrich Alexandra Hermann</Authors>
+    <Copyright>Copyright © 2021 Alexandra Hermann – Beratung, Software, Design</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <Owners>Heinrich Alexandra Hermann</Owners>
+    <PackageReleaseNotes>First version</PackageReleaseNotes>
+    <Summary>A lIbrary for the handling of various nutrients.</Summary>
+    <Title>Library for Nutrients</Title>
+    <Description>A lIbrary for the handling of various nutrients.
+
+Currently there are many apps which have either their own databases and/or user specified data.
+But there are several problems:
+
+a) nutrient infos are changing from time to time - so it is some way of different versions
+b) it seems that there is no international standard
+
+This is a trial to build an international standard for managing these datas and using as well
+some versioning tool for nutrition data. </Description>
+    <AssemblyName>ahbsd.lib.Nutrients_Core3.1</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\netcoreapp3.1\ahbsd.lib.Nutrients.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+    <DocumentationFile>bin\Release\netcoreapp3.1\ahbsd.lib.Nutrients.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="ahbsd.lib" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.7" />
+    <PackageReference Include="System.Data.SQLite.Linq" Version="1.0.113" />
+    <PackageReference Include="sqlite" Version="3.13.0" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.4" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.113.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Nutrient\" />
+    <Folder Include="Measurement\" />
+  </ItemGroup>
+</Project>
