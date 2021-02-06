@@ -33,12 +33,28 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         private string connectionString;
 
+        public readonly string DataSource;
+
+        protected const string dataSourceFmt = "Data Source={0}.db";
+
         /// <summary>
         /// Constructor without parameters.
         /// </summary>
         public NutritionData()
             : base()
         {
+            DataSource = string.Format(dataSourceFmt, "nutrient");
+            Initialize();
+        }
+
+        /// <summary>
+        /// Constructor with a database name.
+        /// </summary>
+        /// <param name="database">The database name.</param>
+        public NutritionData(string database)
+            : base()
+        {
+            DataSource = string.Format(dataSourceFmt, database);
             Initialize();
         }
 
@@ -61,6 +77,8 @@ namespace ahbsd.lib.Nutrients.Data
             Connection.StateChange += Connection_StateChange;
             DataAdapter.FillError += DataAdapter_FillError;
             DataAdapter.RowUpdated += DataAdapter_RowUpdated;
+
+
         }
 
         private void Connection_StateChange(object sender, StateChangeEventArgs e)
