@@ -21,7 +21,7 @@ namespace ahbsd.lib.Nutrients.Data
     /// <summary>
     /// Defines the dataset for the database nutrients.
     /// </summary>
-    public class NutrientsDataSet : DataSet
+    public class NutrientsDataSet : DataSet, INutrientsDataSet
     {
         /// <summary>
         /// Constructor without any parameters.
@@ -109,5 +109,18 @@ namespace ahbsd.lib.Nutrients.Data
 
             EndInit();
         }
+
+        #region implementation of INutrientsDataSet
+        /// <summary>
+        /// Gets the <see cref="DataTable"/> Nutrient.
+        /// </summary>
+        /// <value>The <see cref="DataTable"/> Nutrient.</value>
+        public DataTable Nutrient => Tables["Nutrient"];
+        /// <summary>
+        /// Gets the <see cref="DataTable"/> Unit.
+        /// </summary>
+        /// <value>The <see cref="DataTable"/> Unit.</value>
+        public DataTable Unit => Tables["Unit"];
+        #endregion
     }
 }
