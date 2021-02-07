@@ -40,7 +40,7 @@ namespace ahbsd.lib.Nutrients.Data
         /// <summary>
         /// The default format for data-sources.
         /// </summary>
-        protected const string dataSourceFmt = "Data Source={0}.db";
+        protected const string dataSourceFmt = "Data Source=Data/{0}.db";
 
         /// <summary>
         /// Constructor without parameters.
@@ -48,7 +48,7 @@ namespace ahbsd.lib.Nutrients.Data
         public NutritionData()
             : base()
         {
-            connectionString = CreateDataSource("nutrient");
+            connectionString = CreateDataSource("nutrients");
             DataSource = connectionString;
             Initialize();
         }
@@ -75,8 +75,9 @@ namespace ahbsd.lib.Nutrients.Data
 
             // creating the database parts.
             connection = new SQLiteConnection(connectionString, true);
-            dataAdapter = new SQLiteDataAdapter();
+            dataAdapter = new SQLiteDataAdapter("Select * from nutrient", connection);
 
+            
 
             // adding the components to Components…
             Add(connection, "Connection");
