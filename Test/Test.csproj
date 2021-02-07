@@ -12,6 +12,6 @@
     <ProjectReference Include="..\ahbsd.lib.Nutrients\ahbsd.lib.Nutrients.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ahbsd.lib" Version="1.0.1" />
+    <PackageReference Include="ahbsd.lib" Version="1.2.0" />
   </ItemGroup>
 </Project>
