@@ -10,6 +10,7 @@ namespace ahbsd.lib.Nutrients.Test
         static void Main(string[] args)
         {
             SQLiteErrorCode liteErrorCode;
+            NutrientsDataSet dsNutrients;
             Console.WriteLine("Test");
             Console.WriteLine("====");
 
@@ -19,6 +20,15 @@ namespace ahbsd.lib.Nutrients.Test
 
             data.Connection.Open();
 
+            if (data.FillNutrients() > 0)
+            {
+                dsNutrients = (NutrientsDataSet)data.Components["DSNutrients"];
+
+                foreach (var item in dsNutrients.Tables["nutrient"].Rows)
+                {
+                    
+                }
+            }
 
             data.Connection.Close();
 

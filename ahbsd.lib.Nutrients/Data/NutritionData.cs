@@ -25,7 +25,7 @@ namespace ahbsd.lib.Nutrients.Data
     /// <summary>
     /// A class to work with the data for Nutrition.
     /// </summary>
-    public partial class NutritionData : Container
+    public partial class NutritionData : Container, INutritionData
     {
         /// <summary>
         /// The connection string.
@@ -71,23 +71,29 @@ namespace ahbsd.lib.Nutrients.Data
         private void Initialize()
         {
             SQLiteConnection connection;
-            SQLiteDataAdapter dataAdapter;
+            SQLiteDataAdapter nutrientDataAdapter;
+            SQLiteDataAdapter unitDataAdapter;
+            NutrientsDataSet dsNutrient;
 
             // creating the database parts.
             connection = new SQLiteConnection(connectionString, true);
-            dataAdapter = new SQLiteDataAdapter("Select * from nutrient", connection);
+            nutrientDataAdapter = new SQLiteDataAdapter("SELECT * FROM nutrient;", connection);
+            unitDataAdapter = new SQLiteDataAdapter("SELECT * FROM Unit;", connection);
+            dsNutrient = new NutrientsDataSet(this);
 
-            
+
 
             // adding the components to Components…
             Add(connection, "Connection");
-            Add(dataAdapter, "DataAdapter");
+            Add(nutrientDataAdapter, "NutrientDataAdapter");
+            Add(unitDataAdapter, "UnitDataAdapter");
 
             // adding event handlers
             Connection.StateChange += Connection_StateChange;
-            DataAdapter.FillError += DataAdapter_FillError;
-            DataAdapter.RowUpdated += DataAdapter_RowUpdated;
-
+            NutrientDataAdapter.FillError += DataAdapter_FillError;
+            NutrientDataAdapter.RowUpdated += DataAdapter_RowUpdated;
+            unitDataAdapter.FillError += DataAdapter_FillError;
+            unitDataAdapter.RowUpdated += DataAdapter_RowUpdated;
         }
 
         private void Connection_StateChange(object sender, StateChangeEventArgs e)
@@ -119,8 +125,21 @@ namespace ahbsd.lib.Nutrients.Data
         /// Gets the <see cref="SQLiteDataAdapter"/>.
         /// </summary>
         /// <value>The SQLiteDataAdapter.</value>
-        public SQLiteDataAdapter DataAdapter
-            => (SQLiteDataAdapter)Components["DataAdapter"];
+        public SQLiteDataAdapter NutrientDataAdapter
+            => (SQLiteDataAdapter)Components["NutrientDataAdapter"];
+
+        /// <summary>
+        /// Gets the <see cref="SQLiteDataAdapter"/>.
+        /// </summary>
+        /// <value>The SQLiteDataAdapter.</value>
+        public SQLiteDataAdapter UnitDataAdapter
+            => (SQLiteDataAdapter)Components["UnitDataAdapter"];
+
+        /// <summary>
+        /// Gets the <see cref="DataSet"/> DSNutrients.
+        /// </summary>
+        /// <value>The <see cref="DataSet"/> DSNutrients.</value>
+        public DataSet DSNutrients => (DataSet)Components["DSNutrients"];
 
         /// <summary>
         /// Gets or sets the ConnectionString.
@@ -162,6 +181,27 @@ namespace ahbsd.lib.Nutrients.Data
                 }
             }
         }
+
+        /// <summary>
+        /// Fills the Dataset with nutrients.Unit data
+        /// </summary>
+        /// <returns>The amount of Rows.</returns>
+        public int FillUnits()
+        {
+            DataAdapter unit = (DataAdapter)Components["UnitDataAdapter"];
+            return unit.Fill((DataSet)Components["DSNutrients"]);
+        }
+
+        /// <summary>
+        /// Fills the DataSet with nutrients.nutrient data.
+        /// </summary>
+        /// <returns>The amount of Rows.</returns>
+        public int FillNutrients()
+        {
+            DataAdapter nutrient = (DataAdapter)Components["NutrientDataAdapter"];
+            return nutrient.Fill((DataSet)Components["DSNutrients"]);
+        }
+
         #endregion
 
         /// <summary>

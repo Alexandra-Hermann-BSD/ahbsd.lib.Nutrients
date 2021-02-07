@@ -22,24 +22,5 @@ using System.Linq;
 
 namespace ahbsd.lib.Nutrients.Data
 {
-    /// <summary>
-    /// A class to work with the data for Nutrition.
-    /// </summary>
-    public partial class NutritionData
-    {
-        /// <summary>
-        /// Creates the NutritionTable, if it doesn't exists.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c> if it worked with positive results or already exists,
-        /// otherwise <c>false</c>.
-        /// </returns>
-        public bool CreateNutrientTable()
-        {
-            bool result = false;
-
-
-            return result;
-        }
-    }
+   
 }
