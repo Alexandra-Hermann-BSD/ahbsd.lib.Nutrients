@@ -47,4 +47,10 @@ some versioning tool for nutrition data. </Description>
     <Folder Include="Nutrient\" />
     <Folder Include="Measurement\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Data\nutrients.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+  </ItemGroup>
 </Project>
