@@ -88,6 +88,7 @@ namespace ahbsd.lib.Nutrients.Test
             {
                 IList<IUnit> units;
                 string uID, name;
+                double g, oz;
 
                 dsNutrients = (NutrientsDataSet)data.DSNutrients;
 
@@ -96,6 +97,10 @@ namespace ahbsd.lib.Nutrients.Test
                 units = UnitTable.GetUnits();
 
                 IOptionalUnit ou = new OptionalUnitOz(units[0]);
+
+                g = 5.0;
+                oz = ou.FormulaOptional(g);
+                g = ou.FormularSI(oz);
 
                 maxCols = UnitTable.Columns.Count;
                 currentCol = 0;

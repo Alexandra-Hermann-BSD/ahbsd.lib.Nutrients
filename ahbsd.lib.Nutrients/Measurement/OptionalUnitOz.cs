@@ -17,20 +17,48 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
+using System.Text;
 
 namespace ahbsd.lib.Nutrients.Measurement
 {
+    /// <summary>
+    /// An option for weight units from SI gram (g) to US ounzes (oz).
+    /// </summary>
     public class OptionalUnitOz : Component, IOptionalUnit
     {
+        /// <summary>
+        /// The path to the json file.
+        /// </summary>
         private string jsonFile;
+        /// <summary>
+        /// A current culture info.
+        /// </summary>
         private CultureInfo cultureInfo;
 
+        /// <summary>
+        /// The value from gram to ounzes.
+        /// </summary>
+        private double g_oz;
+        /// <summary>
+        /// The value from ounzes to gram.
+        /// </summary>
+        private double oz_g;
+
+        /// <summary>
+        /// Constructor with a given base SI-Unit.
+        /// </summary>
+        /// <param name="unit">The given base SI-Unit.</param>
         public OptionalUnitOz(IUnit unit)
             : base()
         {
             Initialize(unit);
         }
 
+        /// <summary>
+        /// Constructor with a given base SI-Unit and a container.
+        /// </summary>
+        /// <param name="unit">The given base SI-Unit.</param>
+        /// <param name="container">The container.</param>
         public OptionalUnitOz(IUnit unit, IContainer container)
             : base()
         {
@@ -38,13 +66,14 @@ namespace ahbsd.lib.Nutrients.Measurement
 
             if (container != null)
             {
-                container.Add(this, BaseUnit.GetType().Name);
+                container.Add(this, $"OptionalUnitOz_{BaseUnit.GetType().Name}");
             }
         }
 
-        private double g_oz;
-        private double oz_g;
-
+        /// <summary>
+        /// Initialization with the given base SI-Unit.
+        /// </summary>
+        /// <param name="unit">The given base SI-Unit.</param>
         private void Initialize(IUnit unit)
         {
             StreamReader reader;
@@ -52,41 +81,64 @@ namespace ahbsd.lib.Nutrients.Measurement
             FormularSI = GetSI;
             FormulaOptional = GetOz;
             cultureInfo = CultureInfo.CurrentCulture;
+            JsonElement je;
+            string tmpname1, tmpname2;
+            double factor;
 
             jsonFile = string.Format(IOptionalUnit.JsonFileFormat,
                 DefaultCulture.Name, BaseUnit.GetType().Name);
 
             try
             {
-#if DEBUG
-                reader = new StreamReader("Measurement/en_US_Unit.json", System.Text.Encoding.UTF8);
-#else
-                reader = new StreamReader(JsonFile, System.Text.Encoding.UTF8);
-#endif
+                reader = new StreamReader(JsonFile, Encoding.UTF8);
 
                 OptUnitJson = JsonDocument.Parse(reader.BaseStream);
                 reader.Close();
             }
             catch (Exception)
-            {
+            { }
 
+            if (OptUnitJson != null)
+            {
+                je = OptUnitJson.RootElement;
+
+                foreach (JsonProperty item in je.EnumerateObject())
+                {
+                    tmpname1 = item.Name;
+                    foreach (JsonProperty item2 in item.Value.EnumerateObject())
+                    {
+                        tmpname2 = item2.Name;
+                        factor = item2.Value.GetDouble();
+
+                        if (tmpname1.Equals("g") && tmpname2.Equals("oz"))
+                        {
+                            g_oz = factor;
+                        }
+                        else if (tmpname1.Equals("oz") && tmpname2.Equals("g"))
+                        {
+                            oz_g = factor;
+                        }
+                    }
+
+                }
             }
         }
 
-        private double GetOz(IUnit input)
-        {
-            double result = 0.0;
+        /// <summary>
+        /// Function for the delegate <see cref="FormulaOptional"/>.
+        /// </summary>
+        /// <param name="input">The input SI value.</param>
+        /// <returns>The calculated OZ value.</returns>
+        private double GetOz(double input) => input * g_oz;
 
-            return result;
-        }
+        /// <summary>
+        /// Function for the delegate <see cref="FormularSI"/>.
+        /// </summary>
+        /// <param name="input">The input OZ value.</param>
+        /// <returns>The calculated SI value.</returns>
+        private double GetSI(double input) => input * oz_g;
 
-        private double GetSI(IUnit input)
-        {
-            double result = 0.0;
-
-            return result;
-        }
-#region implementation of IOptionalUnit
+        #region implementation of IOptionalUnit
 
         /// <summary>
         /// Occures, if <see cref="DefaultCulture"/> was changed by system.
@@ -128,13 +180,11 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// <summary>
         /// Gets the specific value change.
         /// </summary>
-        /// <param name="formular">The formular to use.</param>
         /// <returns>The calculated value.</returns>
         public Formular FormulaOptional { get; private set; }
         /// <summary>
         /// Gets the SI value.
         /// </summary>
-        /// <param name="formular">The formular to use.</param>
         /// <returns>The calculated value.</returns>
         public Formular FormularSI { get; private set; }
 

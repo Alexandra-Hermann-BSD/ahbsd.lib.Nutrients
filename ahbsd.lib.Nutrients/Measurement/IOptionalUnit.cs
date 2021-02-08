@@ -51,13 +51,11 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// <summary>
         /// Gets the specific value change.
         /// </summary>
-        /// <param name="formular">The formular to use.</param>
         /// <returns>The calculated value.</returns>
         Formular FormulaOptional { get; }
         /// <summary>
         /// Gets the SI value.
         /// </summary>
-        /// <param name="formular">The formular to use.</param>
         /// <returns>The calculated value.</returns>
         Formular FormularSI { get; }
         /// <summary>
@@ -72,5 +70,5 @@ namespace ahbsd.lib.Nutrients.Measurement
     /// </summary>
     /// <param name="input">The input value.</param>
     /// <returns>The calculated result.</returns>
-    public delegate double Formular(IUnit input);
+    public delegate double Formular(double input);
 }
