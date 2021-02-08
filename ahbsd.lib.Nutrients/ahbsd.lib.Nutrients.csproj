@@ -52,5 +52,9 @@ some versioning tool for nutrition data. </Description>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInPackage>true</IncludeInPackage>
     </None>
+    <None Update="Measurement\en_US_Unit.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
   </ItemGroup>
 </Project>

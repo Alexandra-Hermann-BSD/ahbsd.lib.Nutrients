@@ -12,50 +12,88 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
+using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 
 namespace ahbsd.lib.Nutrients.Measurement
 {
-    /// <summary>
-    /// Interface for expanding a given unit.
-    /// </summary>
-    public interface IOptionalUnit : IUnit
+    public class OptionalUnitOz : IOptionalUnit
     {
+        public OptionalUnitOz(IUnit unit)
+        {
+            BaseUnit = unit;
+            FormularSI = GetSI;
+            FormulaOptional = GetOz;
+        }
+
+        private double GetOz(IUnit input)
+        {
+            double result = 0.0;
+
+            return result;
+        }
+
+        private double GetSI(IUnit input)
+        {
+            double result = 0.0;
+
+            return result;
+        }
+        #region implementation of IOptionalUnit
+
         /// <summary>
         /// Gets the base measurement.
         /// </summary>
         /// <value>The base measurement.</value>
-        IUnit BaseUnit { get; }
+        public IUnit BaseUnit { get; private set; }
         /// <summary>
         /// Gets the default culture for this optional unit.
         /// </summary>
         /// <value>The default culture for this optional unit.</value>
-        CultureInfo DefaultCulture { get; }
+        public CultureInfo DefaultCulture { get; }
+
         /// <summary>
         /// Gets the specific value change.
         /// </summary>
         /// <param name="formular">The formular to use.</param>
         /// <returns>The calculated value.</returns>
-        Formular FormulaOptional { get; }
+        public Formular FormulaOptional { get; private set; }
         /// <summary>
         /// Gets the SI value.
         /// </summary>
         /// <param name="formular">The formular to use.</param>
         /// <returns>The calculated value.</returns>
-        Formular FormularSI { get; }
+        public Formular FormularSI { get; private set; }
+
         /// <summary>
         /// Gets a Json Document that holds the calculation variables.
         /// </summary>
         /// <value>A Json Document that holds the calculation variables.</value>
-        JsonDocument OptUnitJson { get; }
-    }
+        public JsonDocument OptUnitJson { get; private set; }
 
-    /// <summary>
-    /// Delegate for seperate functions to calculate the values.
-    /// </summary>
-    /// <param name="input">The input value.</param>
-    /// <returns>The calculated result.</returns>
-    public delegate double Formular(IUnit input);
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public double Value
+        {
+            get => BaseUnit.Value;
+            set => BaseUnit.Value = value;
+        }
+
+        /// <summary>
+        /// Gets the UnitID.
+        /// </summary>
+        /// <value>The UnitID.</value>
+        public int UID => BaseUnit.UID;
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        public string Name => BaseUnit.Name;
+        #endregion
+    }
 }

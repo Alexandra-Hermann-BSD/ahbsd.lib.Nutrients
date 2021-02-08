@@ -29,5 +29,11 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// </summary>
         /// <value>The name.</value>
         string Name { get; }
+
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        double Value { get; set; }
     }
 }

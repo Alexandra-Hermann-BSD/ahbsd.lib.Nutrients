@@ -49,6 +49,8 @@ namespace ahbsd.lib.Nutrients.Measurement
                 ex = new Exception<string>($"Max size for name is 5, but {name.Trim()} is longer: {name.Trim().Length} > 5!", name.Trim());
                 throw ex;
             }
+
+            Value = 0.0;
         }
 
         #region implementation of IUnit
@@ -62,6 +64,12 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// </summary>
         /// <value>The name.</value>
         public string Name => uName;
+
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public double Value { get; set; }
         #endregion
     }
 }
