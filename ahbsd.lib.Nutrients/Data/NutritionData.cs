@@ -81,8 +81,6 @@ namespace ahbsd.lib.Nutrients.Data
             unitDataAdapter = new SQLiteDataAdapter("SELECT * FROM Unit;", connection);
             dsNutrient = new NutrientsDataSet(this);
 
-
-
             // adding the components to Components…
             Add(connection, "Connection");
             Add(nutrientDataAdapter, "NutrientDataAdapter");
@@ -188,8 +186,7 @@ namespace ahbsd.lib.Nutrients.Data
         /// <returns>The amount of Rows.</returns>
         public int FillUnits()
         {
-            DataAdapter unit = (DataAdapter)Components["UnitDataAdapter"];
-            return unit.Fill((DataSet)Components["DSNutrients"]);
+            return UnitDataAdapter.Fill(DSNutrients, "Unit");
         }
 
         /// <summary>
@@ -198,8 +195,7 @@ namespace ahbsd.lib.Nutrients.Data
         /// <returns>The amount of Rows.</returns>
         public int FillNutrients()
         {
-            DataAdapter nutrient = (DataAdapter)Components["NutrientDataAdapter"];
-            return nutrient.Fill((DataSet)Components["DSNutrients"]);
+            return NutrientDataAdapter.Fill(DSNutrients, "Nutrient");
         }
 
         #endregion

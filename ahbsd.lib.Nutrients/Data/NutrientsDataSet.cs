@@ -95,7 +95,7 @@ namespace ahbsd.lib.Nutrients.Data
             Unit.Columns["uID"].Caption = "ID";
 
             Unit.Columns["name"].AllowDBNull = false;
-            Unit.Columns["name"].Caption = "Unit Name";
+            Unit.Columns["name"].Caption = "Unit";
             Unit.Columns["name"].MaxLength = 5;
 
             Unit.EndInit();
