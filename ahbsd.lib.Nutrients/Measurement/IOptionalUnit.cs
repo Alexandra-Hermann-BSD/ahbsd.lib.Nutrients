@@ -12,31 +12,25 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-using System;
 using System.Globalization;
 
 namespace ahbsd.lib.Nutrients.Measurement
 {
     /// <summary>
-    /// Interface for expanding a given measurement.
+    /// Interface for expanding a given unit.
     /// </summary>
-    public interface IMeasurementOptional : IMeasurement
+    public interface IOptionalUnit : IUnit
     {
         /// <summary>
         /// Gets the base measurement.
         /// </summary>
         /// <value>The base measurement.</value>
-        IMeasurement BaseMeasurement { get; }
+        IUnit BaseUnit { get; }
         /// <summary>
-        /// Gets the default culture for this optional measurement.
+        /// Gets the default culture for this optional unit.
         /// </summary>
-        /// <value>The default culture for this optional measurement.</value>
+        /// <value>The default culture for this optional unit.</value>
         CultureInfo DefaultCulture { get; }
-        /// <summary>
-        /// Gets or sets the optional value.
-        /// </summary>
-        /// <value>The optional value.</value>
-        double OptionalValue { get; set; }
         /// <summary>
         /// Gets the specific value change.
         /// </summary>
@@ -47,7 +41,7 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// Gets the SI value.
         /// </summary>
         /// <param name="formular">The formular to use.</param>
-        /// <returns>The clculated value.</returns>
+        /// <returns>The calculated value.</returns>
         double FormularSI(Formular formular);
     }
 
@@ -56,5 +50,5 @@ namespace ahbsd.lib.Nutrients.Measurement
     /// </summary>
     /// <param name="input">The input value.</param>
     /// <returns>The calculated result.</returns>
-    public delegate double Formular(IMeasurement input);
+    public delegate double Formular(IUnit input);
 }

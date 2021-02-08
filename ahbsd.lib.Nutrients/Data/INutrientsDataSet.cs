@@ -12,7 +12,6 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-using System.Data;
 
 namespace ahbsd.lib.Nutrients.Data
 {
@@ -22,14 +21,14 @@ namespace ahbsd.lib.Nutrients.Data
     public interface INutrientsDataSet
     {
         /// <summary>
-        /// Gets the <see cref="DataTable"/> Nutrient.
+        /// Gets the <see cref="NutrientTable"/> Nutrient.
         /// </summary>
-        /// <value>The <see cref="DataTable"/> Nutrient.</value>
-        DataTable Nutrient { get; }
+        /// <value>The <see cref="NutrientTable"/> Nutrient.</value>
+        NutrientTable Nutrient { get; }
         /// <summary>
-        /// Gets the <see cref="DataTable"/> Unit.
+        /// Gets the <see cref="UnitTable"/> Unit.
         /// </summary>
-        /// <value>The <see cref="DataTable"/> Unit.</value>
-        DataTable Unit { get; }
+        /// <value>The <see cref="UnitTable"/> Unit.</value>
+        UnitTable Unit { get; }
     }
 }

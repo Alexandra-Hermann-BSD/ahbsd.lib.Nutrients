@@ -49,57 +49,8 @@ namespace ahbsd.lib.Nutrients.Data
         private void InitiateDS()
         {
             // deinition of single objects
-            DataTable Nutrient = new DataTable("Nutrient");
-            DataTable Unit = new DataTable("Unit");
-
-            DataColumn NutrientID = new DataColumn("nID", typeof(int));
-            DataColumn NutrientName = new DataColumn("name", typeof(string));
-            DataColumn NutrientUnit = new DataColumn("unit", typeof(string));
-            DataColumn NutrientAlternative = new DataColumn("Alternative", typeof(string));
-
-            DataColumn UnitID = new DataColumn("uID", typeof(int));
-            DataColumn UnitName = new DataColumn("name", typeof(string));
-
-            // Initialization Nutrient Table
-            Nutrient.BeginInit();
-
-            Nutrient.Columns.Add(NutrientID);
-            Nutrient.Columns.Add(NutrientName);
-            Nutrient.Columns.Add(NutrientUnit);
-            Nutrient.Columns.Add(NutrientAlternative);
-
-            Nutrient.Columns["nID"].AutoIncrement = true;
-            Nutrient.Columns["nID"].Caption = "ID";
-
-            Nutrient.Columns["name"].AllowDBNull = false;
-            Nutrient.Columns["name"].Caption = "Nutrient Name";
-            Nutrient.Columns["name"].MaxLength = 80;
-
-            Nutrient.Columns["unit"].AllowDBNull = false;
-            Nutrient.Columns["unit"].Caption = "Unit";
-            Nutrient.Columns["unit"].MaxLength = 5;
-
-            Nutrient.Columns["Alternative"].AllowDBNull = true;
-            Nutrient.Columns["Alternative"].Caption = "Alternative Name";
-            Nutrient.Columns["Alternative"].DefaultValue = DBNull.Value;
-
-            Nutrient.EndInit();
-
-            // Initialization Unit Table
-            Unit.BeginInit();
-
-            Unit.Columns.Add(UnitID);
-            Unit.Columns.Add(UnitName);
-
-            Unit.Columns["uID"].AutoIncrement = true;
-            Unit.Columns["uID"].Caption = "ID";
-
-            Unit.Columns["name"].AllowDBNull = false;
-            Unit.Columns["name"].Caption = "Unit";
-            Unit.Columns["name"].MaxLength = 5;
-
-            Unit.EndInit();
-
+            NutrientTable Nutrient = new NutrientTable();
+            UnitTable Unit = new UnitTable();
 
             BeginInit();
             Clear();
@@ -112,15 +63,15 @@ namespace ahbsd.lib.Nutrients.Data
 
         #region implementation of INutrientsDataSet
         /// <summary>
-        /// Gets the <see cref="DataTable"/> Nutrient.
+        /// Gets the <see cref="NutrientTable"/> Nutrient.
         /// </summary>
-        /// <value>The <see cref="DataTable"/> Nutrient.</value>
-        public DataTable Nutrient => Tables["Nutrient"];
+        /// <value>The <see cref="NutrientTable"/> Nutrient.</value>
+        public NutrientTable Nutrient => (NutrientTable)Tables["Nutrient"];
         /// <summary>
-        /// Gets the <see cref="DataTable"/> Unit.
+        /// Gets the <see cref="UnitTable"/> Unit.
         /// </summary>
-        /// <value>The <see cref="DataTable"/> Unit.</value>
-        public DataTable Unit => Tables["Unit"];
+        /// <value>The <see cref="UnitTable"/> Unit.</value>
+        public UnitTable Unit => (UnitTable)Tables["Unit"];
         #endregion
     }
 }

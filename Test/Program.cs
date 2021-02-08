@@ -1,5 +1,6 @@
 ﻿using System;
 using ahbsd.lib.Nutrients.Data;
+using ahbsd.lib.Nutrients.Measurement;
 using System.Data;
 using System.Data.SQLite;
 using System.Collections;
@@ -14,8 +15,9 @@ namespace ahbsd.lib.Nutrients.Test
         {
             SQLiteErrorCode liteErrorCode;
             NutrientsDataSet dsNutrients;
-         
-            DataTable NutrientTable, UnitTable;
+
+            NutrientTable NutrientTable;
+            UnitTable UnitTable;
             IDictionary<string, int> lengthPerCol;
             Console.WriteLine("Test");
             Console.WriteLine("====");
@@ -34,7 +36,7 @@ namespace ahbsd.lib.Nutrients.Test
 
                 dsNutrients = (NutrientsDataSet)data.DSNutrients;
 
-                NutrientTable = dsNutrients.Tables["nutrient"];
+                NutrientTable = (NutrientTable)dsNutrients.Tables["nutrient"];
 
                 maxCols = NutrientTable.Columns.Count;
                 currentCol = 0;
@@ -84,11 +86,14 @@ namespace ahbsd.lib.Nutrients.Test
 
             if (data.FillUnits() > 0)
             {
+                IList<IUnit> units;
                 string uID, name;
 
                 dsNutrients = (NutrientsDataSet)data.DSNutrients;
 
-                UnitTable = dsNutrients.Tables["unit"];
+                UnitTable = (UnitTable)dsNutrients.Tables["unit"];
+
+                units = UnitTable.GetUnits();
 
                 maxCols = UnitTable.Columns.Count;
                 currentCol = 0;

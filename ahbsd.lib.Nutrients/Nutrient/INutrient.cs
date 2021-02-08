@@ -13,6 +13,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 using System.Globalization;
+using ahbsd.lib;
 using ahbsd.lib.Nutrients.Measurement;
 
 namespace ahbsd.lib.Nutrients.Nutrient
@@ -23,11 +24,24 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// <remarks>
     /// The default measurements are in SI, for optional measurements the
     /// formulas must be defined in other classes.
-    /// <seealso cref="Nutrients.Measurement"/>.
+    /// <seealso cref="Measurement"/>.
     /// The default names are international as well.
     /// </remarks>
     public interface INutrient
     {
+        /// <summary>
+        /// Happens, if <see cref="OptionalUnit"/> has changed.
+        /// </summary>
+        event ChangeEventHandler<IOptionalUnit> OnOptionalUnitChanged;
+        /// <summary>
+        /// Happenes, if <see cref="CurrentCulture"/> has changed.
+        /// </summary>
+        event ChangeEventHandler<CultureInfo> OnCultureChanged;
+        /// <summary>
+        /// Gets the NutrientID.
+        /// </summary>
+        /// <value>The NutrientID.</value>
+        int ID { get; }
         /// <summary>
         /// Gets the name of the nutrient.
         /// </summary>
@@ -42,16 +56,16 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// Gets the Measurement.
         /// </summary>
         /// <value>The Measurement.</value>
-        IMeasurement Measurement { get; }
+        IUnit Unit { get; }
         /// <summary>
         /// Gets the optional measurement - if available.
         /// </summary>
         /// <value>The optional measurement.</value>
-        IMeasurementOptional OptionalMeasurement { get; }
+        IOptionalUnit OptionalUnit { get; set; }
         /// <summary>
         /// Gets the current culture.
         /// </summary>
         /// <value>The current culture.</value>
-        CultureInfo CurrentCulture { get; }
+        CultureInfo CurrentCulture { get; set; }
     }
 }

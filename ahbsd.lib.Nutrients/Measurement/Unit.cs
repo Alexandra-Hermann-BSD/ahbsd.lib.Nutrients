@@ -34,7 +34,7 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// </summary>
         /// <param name="uid">The given ID.</param>
         /// <param name="name">The given name.</param>
-        /// <exception cref="Exception{string}">If trimmed length of name is greater than 5.</exception>
+        /// <exception cref="Exception{T}">If trimmed length of name is greater than 5.</exception>
         public Unit(int uid, string name)
         {
             Exception<string> ex;
