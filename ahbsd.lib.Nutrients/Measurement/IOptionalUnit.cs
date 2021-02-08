@@ -15,6 +15,7 @@
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
+using ahbsd.lib;
 
 namespace ahbsd.lib.Nutrients.Measurement
 {
@@ -23,6 +24,20 @@ namespace ahbsd.lib.Nutrients.Measurement
     /// </summary>
     public interface IOptionalUnit : IUnit
     {
+        /// <summary>
+        /// Occures, if <see cref="DefaultCulture"/> was changed by system.
+        /// </summary>
+        event ChangeEventHandler<CultureInfo> OnCultureChanged;
+        /// <summary>
+        /// Constant format for json files; 0 is Culture (e.g.: en-US) 1 is area
+        /// (e.g. Unit).
+        /// </summary>
+        const string JsonFileFormat = "Measurement/{0}_{1}.json";
+        /// <summary>
+        /// Gets the JsonFile name.
+        /// </summary>
+        /// <value>The JsonFile name.</value>
+        string JsonFile { get; }
         /// <summary>
         /// Gets the base measurement.
         /// </summary>

@@ -13,19 +13,64 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 
 namespace ahbsd.lib.Nutrients.Measurement
 {
-    public class OptionalUnitOz : IOptionalUnit
+    public class OptionalUnitOz : Component, IOptionalUnit
     {
+        private string jsonFile;
+        private CultureInfo cultureInfo;
+
         public OptionalUnitOz(IUnit unit)
+            : base()
         {
+            Initialize(unit);
+        }
+
+        public OptionalUnitOz(IUnit unit, IContainer container)
+            : base()
+        {
+            Initialize(unit);
+
+            if (container != null)
+            {
+                container.Add(this, BaseUnit.GetType().Name);
+            }
+        }
+
+        private double g_oz;
+        private double oz_g;
+
+        private void Initialize(IUnit unit)
+        {
+            StreamReader reader;
             BaseUnit = unit;
             FormularSI = GetSI;
             FormulaOptional = GetOz;
+            cultureInfo = CultureInfo.CurrentCulture;
+
+            jsonFile = string.Format(IOptionalUnit.JsonFileFormat,
+                DefaultCulture.Name, BaseUnit.GetType().Name);
+
+            try
+            {
+#if DEBUG
+                reader = new StreamReader("Measurement/en_US_Unit.json", System.Text.Encoding.UTF8);
+#else
+                reader = new StreamReader(JsonFile, System.Text.Encoding.UTF8);
+#endif
+
+                OptUnitJson = JsonDocument.Parse(reader.BaseStream);
+                reader.Close();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private double GetOz(IUnit input)
@@ -41,8 +86,21 @@ namespace ahbsd.lib.Nutrients.Measurement
 
             return result;
         }
-        #region implementation of IOptionalUnit
+#region implementation of IOptionalUnit
 
+        /// <summary>
+        /// Occures, if <see cref="DefaultCulture"/> was changed by system.
+        /// </summary>
+        public event ChangeEventHandler<CultureInfo> OnCultureChanged;
+        /// <summary>
+        /// Gets the JsonFile name.
+        /// </summary>
+        /// <value>The JsonFile name.</value>
+        public string JsonFile
+        {
+            get => jsonFile;
+            private set => jsonFile = value;
+        }
         /// <summary>
         /// Gets the base measurement.
         /// </summary>
@@ -52,7 +110,20 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// Gets the default culture for this optional unit.
         /// </summary>
         /// <value>The default culture for this optional unit.</value>
-        public CultureInfo DefaultCulture { get; }
+        public CultureInfo DefaultCulture
+        {
+            get => cultureInfo;
+            protected internal set
+            {
+                if (value != null && !value.Equals(cultureInfo))
+                {
+                    ChangeEventArgs<CultureInfo> cea
+                        = new ChangeEventArgs<CultureInfo>(cultureInfo, value);
+                    cultureInfo = value;
+                    OnCultureChanged?.Invoke(this, cea);
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the specific value change.
@@ -94,6 +165,6 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// </summary>
         /// <value>The name.</value>
         public string Name => BaseUnit.Name;
-        #endregion
+#endregion
     }
 }

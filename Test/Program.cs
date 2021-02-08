@@ -95,6 +95,8 @@ namespace ahbsd.lib.Nutrients.Test
 
                 units = UnitTable.GetUnits();
 
+                IOptionalUnit ou = new OptionalUnitOz(units[0]);
+
                 maxCols = UnitTable.Columns.Count;
                 currentCol = 0;
 
