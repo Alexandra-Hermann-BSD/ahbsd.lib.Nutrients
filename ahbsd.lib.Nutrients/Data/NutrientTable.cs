@@ -106,6 +106,12 @@ namespace ahbsd.lib.Nutrients.Data
         /// <value>The Column NutrientAlternative.</value>
         public DataColumn NutrientAlternative => Columns["Alternative"];
 
+        /// <summary>
+        /// Get a nutrient from a defined rowID.
+        /// </summary>
+        /// <param name="rowID">The defined rowID.</param>
+        /// <returns>The nutrient from the defined rowID.</returns>
+        /// <exception cref="Exception">If rowID isn't available.</exception>
         public INutrient GetNutrient(int rowID)
         {
             INutrient result;
