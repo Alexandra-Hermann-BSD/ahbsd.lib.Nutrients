@@ -12,8 +12,8 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
+using System.Collections.Generic;
 using System.Globalization;
-using ahbsd.lib;
 using ahbsd.lib.Nutrients.Measurement;
 
 namespace ahbsd.lib.Nutrients.Nutrient
@@ -58,10 +58,15 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// <value>The Measurement.</value>
         IUnit Unit { get; }
         /// <summary>
-        /// Gets the optional measurement - if available.
+        /// Gets the optional measurements ordered by Culture.
         /// </summary>
-        /// <value>The optional measurement.</value>
-        IOptionalUnit OptionalUnit { get; set; }
+        /// <value>The optional measurements ordered by Culture.</value>
+        IDictionary<CultureInfo, IOptionalUnit> OptionalUnits { get; }
+        /// <summary>
+        /// Gets the optional unit for the current culture.
+        /// </summary>
+        /// <value>The optional unit for the current culture.</value>
+        IOptionalUnit OptionalUnit { get; }
         /// <summary>
         /// Gets the current culture.
         /// </summary>

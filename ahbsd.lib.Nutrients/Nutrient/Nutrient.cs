@@ -16,15 +16,19 @@ using System.Globalization;
 using System;
 using ahbsd.lib;
 using ahbsd.lib.Nutrients.Measurement;
+using System.Collections.Generic;
 
 namespace ahbsd.lib.Nutrients.Nutrient
 {
+    /// <summary>
+    /// A Class for Nutrient info.
+    /// </summary>
     public class Nutrient : INutrient
     {
         private readonly int nID;
         private readonly string nName;
         private CultureInfo culture;
-        private IOptionalUnit optionalUnit;
+        private IDictionary<CultureInfo, IOptionalUnit> optionalUnits;
 
         /// <summary>
         /// Constructor with id, name and unit.
@@ -48,7 +52,8 @@ namespace ahbsd.lib.Nutrients.Nutrient
             Unit = unit;
 
             DisplayName = Name;
-            optionalUnit = null;
+            optionalUnits = new Dictionary<CultureInfo, IOptionalUnit>();
+
             culture = CultureInfo.CurrentCulture;
         }
 
@@ -82,30 +87,17 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// <value>The Measurement.</value>
         public IUnit Unit { get; private set; }
         /// <summary>
-        /// Gets the optional measurement - if available.
+        /// Gets the optional measurements ordered by Culture.
         /// </summary>
-        /// <value>The optional measurement.</value>
-        public IOptionalUnit OptionalUnit
-        {
-            get => optionalUnit;
-            set
-            {
-                if (value != null && !value.Equals(optionalUnit))
-                {
-                    ChangeEventArgs<IOptionalUnit> cea
-                        = new ChangeEventArgs<IOptionalUnit>(optionalUnit,
-                        value);
-                    optionalUnit = value;
+        /// <value>The optional measurements ordered by Culture.</value>
+        public IDictionary<CultureInfo, IOptionalUnit> OptionalUnits => optionalUnits;
 
-                    if (!optionalUnit.DefaultCulture.Equals(CurrentCulture))
-                    {
-                        CurrentCulture = optionalUnit.DefaultCulture;
-                    }
+        /// <summary>
+        /// Gets the optional unit for the current culture.
+        /// </summary>
+        /// <value>The optional unit for the current culture.</value>
+        public IOptionalUnit OptionalUnit => OptionalUnits[CurrentCulture];
 
-                    OnOptionalUnitChanged?.Invoke(this, cea);
-                }
-            }
-        }
         /// <summary>
         /// Gets the current culture.
         /// </summary>
@@ -118,9 +110,11 @@ namespace ahbsd.lib.Nutrients.Nutrient
                 if (value != null && !value.Equals(culture))
                 {
                     ChangeEventArgs<CultureInfo> cea = new ChangeEventArgs<CultureInfo>(culture, value);
+                    ChangeEventArgs<IOptionalUnit> ceaOU = new ChangeEventArgs<IOptionalUnit>(optionalUnits[culture], OptionalUnits[value]);
                     culture = value;
 
                     OnCultureChanged?.Invoke(this, cea);
+                    OnOptionalUnitChanged?.Invoke(this, ceaOU);
                 }
             }
         }
