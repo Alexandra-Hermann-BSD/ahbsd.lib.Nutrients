@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,11 +7,11 @@
     <SynchReleaseVersion>false</SynchReleaseVersion>
     <RootNamespace>ahbsd.lib.Nutrients.Test</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\ahbsd.lib.Nutrients\ahbsd.lib.Nutrients.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ahbsd.lib" Version="1.2.0" />
   </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
