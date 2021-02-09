@@ -13,9 +13,6 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 using System.Globalization;
-using System.IO;
-using System.Text.Json;
-using ahbsd.lib;
 
 namespace ahbsd.lib.Nutrients.Measurement
 {
@@ -28,16 +25,6 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// Occures, if <see cref="DefaultCulture"/> was changed by system.
         /// </summary>
         event ChangeEventHandler<CultureInfo> OnCultureChanged;
-        /// <summary>
-        /// Constant format for json files; 0 is Culture (e.g.: en-US) 1 is area
-        /// (e.g. Unit).
-        /// </summary>
-        const string JsonFileFormat = "Measurement/{0}_{1}.json";
-        /// <summary>
-        /// Gets the JsonFile name.
-        /// </summary>
-        /// <value>The JsonFile name.</value>
-        string JsonFile { get; }
         /// <summary>
         /// Gets the base measurement.
         /// </summary>
@@ -59,10 +46,10 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// <returns>The calculated value.</returns>
         Formular FormularSI { get; }
         /// <summary>
-        /// Gets a Json Document that holds the calculation variables.
+        /// Gets the optional name.
         /// </summary>
-        /// <value>A Json Document that holds the calculation variables.</value>
-        JsonDocument OptUnitJson { get; }
+        /// <value>The optional name.</value>
+        string OptionalName { get; }
     }
 
     /// <summary>

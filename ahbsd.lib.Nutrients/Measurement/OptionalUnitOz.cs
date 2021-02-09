@@ -15,9 +15,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
 using System.Text.Json;
-using System.Text;
 
 namespace ahbsd.lib.Nutrients.Measurement
 {
@@ -38,11 +36,11 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// <summary>
         /// The value from gram to ounzes.
         /// </summary>
-        private double g_oz;
+        protected const double g_oz = 0.035274;
         /// <summary>
         /// The value from ounzes to gram.
         /// </summary>
-        private double oz_g;
+        protected const double oz_g = 28.349492544083461;
 
         /// <summary>
         /// Constructor with a given base SI-Unit.
@@ -59,9 +57,15 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// </summary>
         /// <param name="unit">The given base SI-Unit.</param>
         /// <param name="container">The container.</param>
+        /// <exception cref="Exception">If the SI-Unit isn't 'g'.</exception>
         public OptionalUnitOz(IUnit unit, IContainer container)
             : base()
         {
+            if (!unit.Name.Equals("g"))
+            {
+                throw new Exception($"Unit '{unit.Name}' not supported. " +
+                    "Only 'g'.");
+            }
             Initialize(unit);
 
             if (container != null)
@@ -76,52 +80,10 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// <param name="unit">The given base SI-Unit.</param>
         private void Initialize(IUnit unit)
         {
-            StreamReader reader;
             BaseUnit = unit;
             FormularSI = GetSI;
             FormulaOptional = GetOz;
             cultureInfo = CultureInfo.CurrentCulture;
-            JsonElement je;
-            string tmpname1, tmpname2;
-            double factor;
-
-            jsonFile = string.Format(IOptionalUnit.JsonFileFormat,
-                DefaultCulture.Name, BaseUnit.GetType().Name);
-
-            try
-            {
-                reader = new StreamReader(JsonFile, Encoding.UTF8);
-
-                OptUnitJson = JsonDocument.Parse(reader.BaseStream);
-                reader.Close();
-            }
-            catch (Exception)
-            { }
-
-            if (OptUnitJson != null)
-            {
-                je = OptUnitJson.RootElement;
-
-                foreach (JsonProperty item in je.EnumerateObject())
-                {
-                    tmpname1 = item.Name;
-                    foreach (JsonProperty item2 in item.Value.EnumerateObject())
-                    {
-                        tmpname2 = item2.Name;
-                        factor = item2.Value.GetDouble();
-
-                        if (tmpname1.Equals("g") && tmpname2.Equals("oz"))
-                        {
-                            g_oz = factor;
-                        }
-                        else if (tmpname1.Equals("oz") && tmpname2.Equals("g"))
-                        {
-                            oz_g = factor;
-                        }
-                    }
-
-                }
-            }
         }
 
         /// <summary>
@@ -215,6 +177,11 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// </summary>
         /// <value>The name.</value>
         public string Name => BaseUnit.Name;
+        /// <summary>
+        /// Gets the optional name.
+        /// </summary>
+        /// <value>The optional name.</value>
+        public string OptionalName => "oz";
 #endregion
     }
 }
