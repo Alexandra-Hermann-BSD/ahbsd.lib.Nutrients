@@ -19,17 +19,19 @@ using System.ComponentModel;
 using ahbsd.lib.Nutrients.Measurement;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace ahbsd.lib.Nutrients.Nutrient
 {
     /// <summary>
     /// A Class for Nutrient info.
     /// </summary>
-    public class Nutrient : Component, INutrient
+    public partial class Nutrient : Component, INutrient
     {
         private readonly int nID;
         private readonly string nName;
         private readonly string nAlternative;
+        private string displayName;
         private CultureInfo culture;
         private IDictionary<CultureInfo, IOptionalUnit> optionalUnits;
 
@@ -63,6 +65,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
             optionalUnits = new Dictionary<CultureInfo, IOptionalUnit>();
 
             culture = CultureInfo.CurrentCulture;
+            optionalUnits.Add(culture, new OptionalUnitOz(unit, Container));
         }
 
         /// <summary>
@@ -96,6 +99,8 @@ namespace ahbsd.lib.Nutrients.Nutrient
             optionalUnits = new Dictionary<CultureInfo, IOptionalUnit>();
 
             culture = CultureInfo.CurrentCulture;
+            optionalUnits.Add(culture, new OptionalUnitOz(unit, Container));
+
 
             if (container != null)
             {
@@ -104,6 +109,11 @@ namespace ahbsd.lib.Nutrients.Nutrient
         }
 
         #region implementation of INutrient
+
+        /// <summary>
+        /// Happens, if the <see cref="DisplayName"/> was changed from outside.
+        /// </summary>
+        public event ChangeEventHandler<string> OnDisplayNameChanged;
         /// <summary>
         /// Happens, if <see cref="OptionalUnit"/> has changed.
         /// </summary>
@@ -131,7 +141,19 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// Gets the display name of the nutrient.
         /// </summary>
         /// <value>The display name of the nutrient.</value>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get => displayName;
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && !value.Equals(displayName))
+                {
+                    ChangeEventArgs<string> cea = new ChangeEventArgs<string>(displayName, value);
+                    displayName = value;
+                    OnDisplayNameChanged?.Invoke(this, cea);
+                }
+            }
+        }
         /// <summary>
         /// Gets the Measurement.
         /// </summary>
@@ -158,12 +180,64 @@ namespace ahbsd.lib.Nutrients.Nutrient
             get => culture;
             set
             {
+                INutrientTranslation translation;
+
                 if (value != null && !value.Equals(culture))
                 {
+                    if (!optionalUnits.ContainsKey(value))
+                    {
+                        optionalUnits.Add(value, null);
+                    }
+
                     ChangeEventArgs<CultureInfo> cea = new ChangeEventArgs<CultureInfo>(culture, value);
                     ChangeEventArgs<IOptionalUnit> ceaOU = new ChangeEventArgs<IOptionalUnit>(optionalUnits[culture], OptionalUnits[value]);
                     culture = value;
+                    translation = GetNutrientTranslation(value);
 
+                    displayName = Name switch
+                    {
+                        "Biotin" => translation.Biotin,
+                        "Caffeine" => translation.Caffeine,
+                        "Calcium" => translation.Calcium,
+                        "Carbohydrates" => translation.Carbohydrates,
+                        "Chloride" => translation.Chloride,
+                        "Cholesterol" => translation.Cholesterol,
+                        "Chromium" => translation.Chromium,
+                        "Copper" => translation.Copper,
+                        "FatMonosaturated" => translation.FatMonosaturated,
+                        "FatPolysaturated" => translation.FatPolysaturated,
+                        "FatSaturated" => translation.FatSaturated,
+                        "FatTotal" => translation.FatTotal,
+                        "Fiber" => translation.Fiber,
+                        "Folate" => translation.Folate,
+                        "Iodine" => translation.Iodine,
+                        "Iron" => translation.Iron,
+                        "Magnesium" => translation.Magnesium,
+                        "Manganese" => translation.Manganese,
+                        "Molybdenum" => translation.Molybdenum,
+                        "Niacin" => translation.Niacin,
+                        "PantotenicAcid" => translation.PantotenicAcid,
+                        "Phosphorus" => translation.Phosphorus,
+                        "Potassium" => translation.Potassium,
+                        "Protein" => translation.Protein,
+                        "Riboflavin" => translation.Riboflavin,
+                        "Selenium" => translation.Selenium,
+                        "Sodium" => translation.Sodium,
+                        "Sugar" => translation.Sugar,
+                        "Thiamin" => translation.Thiamin,
+                        "VitaminA" => translation.VitaminA,
+                        "VitaminB12" => translation.VitaminB12,
+                        "VitaminB6" => translation.VitaminB6,
+                        "VitaminC" => translation.VitaminC,
+                        "VitaminD" => translation.VitaminD,
+                        "VitaminE" => translation.VitaminE,
+                        "VitaminK" => translation.VitaminK,
+                        "Water" => translation.Water,
+                        "Zinc" => translation.Zinc,
+                        "Alcohol" => translation.Alcohol,
+                        "Energy" => translation.Energy,
+                        _ => Name,
+                    };
                     OnCultureChanged?.Invoke(this, cea);
                     OnOptionalUnitChanged?.Invoke(this, ceaOU);
                 }
@@ -177,7 +251,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// <returns></returns>
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder(Name);
+            StringBuilder stringBuilder = new StringBuilder(DisplayName);
 
             if (!string.IsNullOrEmpty(Alternative))
             {

@@ -31,6 +31,10 @@ namespace ahbsd.lib.Nutrients.Nutrient
     public interface INutrient : IComponent
     {
         /// <summary>
+        /// Happens, if the <see cref="DisplayName"/> was changed from outside.
+        /// </summary>
+        event ChangeEventHandler<string> OnDisplayNameChanged;
+        /// <summary>
         /// Happens, if <see cref="OptionalUnit"/> has changed.
         /// </summary>
         event ChangeEventHandler<IOptionalUnit> OnOptionalUnitChanged;
