@@ -211,6 +211,15 @@ namespace ahbsd.lib.Nutrients.Data
         }
 
         /// <summary>
+        /// Fills the DataSet with nutrients.Producer data.
+        /// </summary>
+        /// <returns>The Amount of Rows.</returns>
+        public int FillProducer()
+        {
+            return ProducerDataAdapter.Fill(DSNutrients, "Producer");
+        }
+
+        /// <summary>
         /// Fills the Dataset with all data.
         /// </summary>
         /// <returns>The amount of all Rows.</returns>
@@ -220,6 +229,7 @@ namespace ahbsd.lib.Nutrients.Data
 
             result += FillUnits();
             result += FillNutrients();
+            result += FillProducer();
 
             return result;
         }

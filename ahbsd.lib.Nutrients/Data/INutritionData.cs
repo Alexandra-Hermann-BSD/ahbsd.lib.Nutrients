@@ -70,6 +70,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// <returns>The amount of Rows.</returns>
         int FillUnits();
         /// <summary>
+        /// Fills the DataSet with nutrients.Producer data.
+        /// </summary>
+        /// <returns>The Amount of Rows.</returns>
+        int FillProducer();
+        /// <summary>
         /// Fills the Dataset with all data.
         /// </summary>
         /// <returns>The amount of all Rows.</returns>
