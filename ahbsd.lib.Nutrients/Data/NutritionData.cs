@@ -73,18 +73,23 @@ namespace ahbsd.lib.Nutrients.Data
             SQLiteConnection connection;
             SQLiteDataAdapter nutrientDataAdapter;
             SQLiteDataAdapter unitDataAdapter;
+            SQLiteDataAdapter producerDataAdapter;
             NutrientsDataSet dsNutrient;
 
             // creating the database parts.
             connection = new SQLiteConnection(connectionString, true);
+
             nutrientDataAdapter = new SQLiteDataAdapter("SELECT * FROM nutrient;", connection);
             unitDataAdapter = new SQLiteDataAdapter("SELECT * FROM Unit;", connection);
+            producerDataAdapter = new SQLiteDataAdapter("SELECT * FROM Producer;", connection);
+
             dsNutrient = new NutrientsDataSet(this);
 
             // adding the components to Components…
             Add(connection, "Connection");
             Add(nutrientDataAdapter, "NutrientDataAdapter");
             Add(unitDataAdapter, "UnitDataAdapter");
+            Add(producerDataAdapter, "ProducerDataAdapter");
 
             // adding event handlers
             Connection.StateChange += Connection_StateChange;
@@ -132,6 +137,13 @@ namespace ahbsd.lib.Nutrients.Data
         /// <value>The SQLiteDataAdapter.</value>
         public SQLiteDataAdapter UnitDataAdapter
             => (SQLiteDataAdapter)Components["UnitDataAdapter"];
+
+        /// <summary>
+        /// Gets the <see cref="SQLiteDataAdapter"/>.
+        /// </summary>
+        /// <value>The SQLiteDataAdapter.</value>
+        public SQLiteDataAdapter ProducerDataAdapter
+            => (SQLiteDataAdapter)Components["ProducerDataAdapter"];
 
         /// <summary>
         /// Gets the <see cref="DataSet"/> DSNutrients.
@@ -196,6 +208,20 @@ namespace ahbsd.lib.Nutrients.Data
         public int FillNutrients()
         {
             return NutrientDataAdapter.Fill(DSNutrients, "Nutrient");
+        }
+
+        /// <summary>
+        /// Fills the Dataset with all data.
+        /// </summary>
+        /// <returns>The amount of all Rows.</returns>
+        public int FillAll()
+        {
+            int result = 0;
+
+            result += FillUnits();
+            result += FillNutrients();
+
+            return result;
         }
 
         #endregion

@@ -12,6 +12,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
+using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 
@@ -20,7 +21,7 @@ namespace ahbsd.lib.Nutrients.Data
     /// <summary>
     /// An interface to work with the data for Nutrition.
     /// </summary>
-    public interface INutritionData
+    public interface INutritionData : IContainer
     {
         /// <summary>
         /// Gets the <see cref="SQLiteConnection"/>.
@@ -37,6 +38,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The SQLiteDataAdapter.</value>
         SQLiteDataAdapter UnitDataAdapter { get; }
+        /// <summary>
+        /// Gets the <see cref="SQLiteDataAdapter"/>.
+        /// </summary>
+        /// <value>The SQLiteDataAdapter.</value>
+        SQLiteDataAdapter ProducerDataAdapter { get; }
         /// <summary>
         /// Gets the <see cref="DataSet"/> DSNutrients.
         /// </summary>
@@ -63,5 +69,10 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <returns>The amount of Rows.</returns>
         int FillUnits();
+        /// <summary>
+        /// Fills the Dataset with all data.
+        /// </summary>
+        /// <returns>The amount of all Rows.</returns>
+        int FillAll();
     }
 }
