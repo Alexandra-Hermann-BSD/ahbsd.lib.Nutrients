@@ -25,14 +25,14 @@ namespace ahbsd.lib.Nutrients.Data
     public interface INutrientTable
     {
         /// <summary>
-        /// Gets the Column NutrientID.
+        /// Gets the Column Nutrient.ID.
         /// </summary>
-        /// <value>The Column NutrientID.</value>
+        /// <value>The Column Nutrient.ID.</value>
         DataColumn NutrientID { get; }
         /// <summary>
-        /// Gets the Column NutrientName.
+        /// Gets the Column Nutrient.Name.
         /// </summary>
-        /// <value>The Column NutrientName.</value>
+        /// <value>The Column Nutrient.Name.</value>
         DataColumn NutrientName { get; }
         /// <summary>
         /// Gets the Column NutrientUnit.
