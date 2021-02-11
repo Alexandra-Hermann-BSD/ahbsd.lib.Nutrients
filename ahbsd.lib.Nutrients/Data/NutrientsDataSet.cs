@@ -49,14 +49,16 @@ namespace ahbsd.lib.Nutrients.Data
         private void InitiateDS()
         {
             // deinition of single objects
-            NutrientTable Nutrient = new NutrientTable();
-            UnitTable Unit = new UnitTable();
+            NutrientTable Nutrient = new NutrientTable(Container);
+            UnitTable Unit = new UnitTable(Container);
+            ProducerTable Producer = new ProducerTable(Container);
 
             BeginInit();
             Clear();
 
             Tables.Add(Nutrient);
             Tables.Add(Unit);
+            Tables.Add(Producer);
 
             EndInit();
         }
@@ -72,6 +74,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The <see cref="UnitTable"/> Unit.</value>
         public UnitTable Unit => (UnitTable)Tables["Unit"];
+        /// <summary>
+        /// Gets the <see cref="ProducerTable"/> Producer.
+        /// </summary>
+        /// <value>The <see cref="ProducerTable"/> Producer.</value>
+        public ProducerTable Producer => (ProducerTable)Tables["Producer"];
         #endregion
     }
 }

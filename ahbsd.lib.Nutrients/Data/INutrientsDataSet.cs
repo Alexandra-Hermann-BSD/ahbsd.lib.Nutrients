@@ -30,5 +30,10 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The <see cref="UnitTable"/> Unit.</value>
         UnitTable Unit { get; }
+        /// <summary>
+        /// Gets the <see cref="ProducerTable"/> Producer.
+        /// </summary>
+        /// <value>The <see cref="ProducerTable"/> Producer.</value>
+        ProducerTable Producer { get; }
     }
 }
