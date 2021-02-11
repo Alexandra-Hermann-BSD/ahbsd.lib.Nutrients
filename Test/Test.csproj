@@ -11,7 +11,7 @@
     <ProjectReference Include="..\ahbsd.lib.Nutrients\ahbsd.lib.Nutrients.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ahbsd.lib" Version="1.2.0" />
+    <PackageReference Include="ahbsd.lib" Version="1.2.1" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
