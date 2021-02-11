@@ -61,10 +61,10 @@ namespace ahbsd.lib.Nutrients.Measurement
         public OptionalUnitOz(IUnit unit, IContainer container)
             : base()
         {
-            if (!unit.Name.Equals("g"))
+            if (unit.Name.Equals("ml") && unit.Name.Equals("J"))
             {
                 throw new Exception($"Unit '{unit.Name}' not supported. " +
-                    "Only 'g'.");
+                    "Only 'g' etc.");
             }
             Initialize(unit);
 
