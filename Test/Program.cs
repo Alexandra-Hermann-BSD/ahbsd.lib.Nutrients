@@ -4,6 +4,7 @@ using ahbsd.lib.Nutrients.Measurement;
 using System.Data;
 using System.Data.SQLite;
 using System.Collections;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ahbsd.lib.Nutrients.Nutrient;
@@ -21,6 +22,7 @@ namespace ahbsd.lib.Nutrients.Test
             NutrientTable NutrientTable;
             UnitTable UnitTable;
             ProducerTable ProducerTable;
+            CultureInfo culture = new CultureInfo("de-DE");
 
             IDictionary<string, int> lengthPerCol;
             Console.WriteLine("Test");
@@ -54,6 +56,10 @@ namespace ahbsd.lib.Nutrients.Test
                 nutrients = NutrientTable.GetNutrients();
                 producers = ProducerTable.GetProducer();
 
+                foreach (INutrient nutrient in nutrients)
+                {
+                    nutrient.CurrentCulture = culture;
+                }
 
                 IOptionalUnit ou = new OptionalUnitOz(units[0]);
                 g = 5.0;
