@@ -14,6 +14,7 @@
 //    limitations under the License.
 using System.Collections.Generic;
 using System.Globalization;
+using System.ComponentModel;
 using ahbsd.lib.Nutrients.Measurement;
 
 namespace ahbsd.lib.Nutrients.Nutrient
@@ -27,7 +28,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// <seealso cref="Measurement"/>.
     /// The default names are international as well.
     /// </remarks>
-    public interface INutrient
+    public interface INutrient : IComponent
     {
         /// <summary>
         /// Happens, if <see cref="OptionalUnit"/> has changed.

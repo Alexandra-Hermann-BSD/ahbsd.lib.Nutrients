@@ -15,6 +15,7 @@
 using System.Globalization;
 using System;
 using ahbsd.lib;
+using System.ComponentModel;
 using ahbsd.lib.Nutrients.Measurement;
 using System.Collections.Generic;
 
@@ -23,7 +24,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// <summary>
     /// A Class for Nutrient info.
     /// </summary>
-    public class Nutrient : INutrient
+    public class Nutrient : Component, INutrient
     {
         private readonly int nID;
         private readonly string nName;
@@ -37,6 +38,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// <param name="name">The name.</param>
         /// <param name="unit">The unit.</param>
         public Nutrient(int id, string name, IUnit unit)
+            : base()
         {
             nID = id;
 
@@ -55,6 +57,40 @@ namespace ahbsd.lib.Nutrients.Nutrient
             optionalUnits = new Dictionary<CultureInfo, IOptionalUnit>();
 
             culture = CultureInfo.CurrentCulture;
+        }
+
+        /// <summary>
+        /// Constructor with id, name, unit and a container.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="unit">The unit.</param>
+        /// <param name="container">The component.</param>
+        public Nutrient(int id, string name, IUnit unit, IContainer container)
+            : base()
+        {
+            nID = id;
+
+            if (name.Trim().Length <= 80)
+            {
+                nName = name.Trim();
+            }
+            else
+            {
+                throw new Exception($"Max length for name is 80; the length of \n'{name.Trim()}'\n is {name.Trim().Length} > 80!");
+            }
+
+            Unit = unit;
+
+            DisplayName = Name;
+            optionalUnits = new Dictionary<CultureInfo, IOptionalUnit>();
+
+            culture = CultureInfo.CurrentCulture;
+
+            if (container != null)
+            {
+                container.Add(this, Name);
+            }
         }
 
         #region implementation of INutrient
