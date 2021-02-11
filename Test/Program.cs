@@ -6,6 +6,8 @@ using System.Data.SQLite;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ahbsd.lib.Nutrients.Nutrient;
+using ahbsd.lib.Nutrients.Producer;
 
 namespace ahbsd.lib.Nutrients.Test
 {
@@ -18,6 +20,8 @@ namespace ahbsd.lib.Nutrients.Test
 
             NutrientTable NutrientTable;
             UnitTable UnitTable;
+            ProducerTable ProducerTable;
+
             IDictionary<string, int> lengthPerCol;
             Console.WriteLine("Test");
             Console.WriteLine("====");
@@ -30,13 +34,38 @@ namespace ahbsd.lib.Nutrients.Test
 
             data.Connection.Open();
 
-            if (data.FillNutrients() > 0)
+            if (data.FillAll() > 0)
             {
+                IList<INutrient> nutrients;
+                IList<IUnit> units;
+                IList<IProducer> producers;
+
                 string nID, name, unit, alternativ;
+                string uID;
+                double g, oz;
 
                 dsNutrients = (NutrientsDataSet)data.DSNutrients;
 
                 NutrientTable = (NutrientTable)dsNutrients.Tables["nutrient"];
+                UnitTable = (UnitTable)dsNutrients.Tables["unit"];
+                ProducerTable = (ProducerTable)dsNutrients.Tables["producer"];
+
+                nutrients = NutrientTable.GetNutrients();
+                units = UnitTable.GetUnits();
+                producers = ProducerTable.GetProducer();
+
+
+                IOptionalUnit ou = new OptionalUnitOz(units[0]);
+                g = 5.0;
+                oz = ou.FormulaOptional(g);
+                g = ou.FormularSI(oz);
+
+                maxCols = UnitTable.Columns.Count;
+                currentCol = 0;
+
+                lengthPerCol = GetSize(UnitTable);
+
+                maxlines = 0;
 
                 maxCols = NutrientTable.Columns.Count;
                 currentCol = 0;
@@ -79,35 +108,6 @@ namespace ahbsd.lib.Nutrients.Test
                     Console.WriteLine($"{nID}{name}{unit}{alternativ}");
                 }
 
-                Console.WriteLine("".PadLeft(maxlines, '–'));
-                Console.WriteLine();
-            }
-
-
-            if (data.FillUnits() > 0)
-            {
-                IList<IUnit> units;
-                string uID, name;
-                double g, oz;
-
-                dsNutrients = (NutrientsDataSet)data.DSNutrients;
-
-                UnitTable = (UnitTable)dsNutrients.Tables["unit"];
-
-                units = UnitTable.GetUnits();
-
-                IOptionalUnit ou = new OptionalUnitOz(units[0]);
-
-                g = 5.0;
-                oz = ou.FormulaOptional(g);
-                g = ou.FormularSI(oz);
-
-                maxCols = UnitTable.Columns.Count;
-                currentCol = 0;
-
-                lengthPerCol = GetSize(UnitTable);
-
-                maxlines = 0;
                 foreach (var item in lengthPerCol)
                 {
                     maxlines += item.Value + 1;
@@ -143,7 +143,12 @@ namespace ahbsd.lib.Nutrients.Test
 
                 Console.WriteLine("".PadLeft(maxlines, '–'));
                 Console.WriteLine();
+
+                Console.WriteLine("".PadLeft(maxlines, '–'));
+                Console.WriteLine();
             }
+
+
             data.Connection.Close();
 
             try
