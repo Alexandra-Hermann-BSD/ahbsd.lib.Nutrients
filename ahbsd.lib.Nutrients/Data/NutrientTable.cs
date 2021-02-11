@@ -127,7 +127,7 @@ namespace ahbsd.lib.Nutrients.Data
                 row = Rows[rowID];
                 id = (int)row[NutrientID];
                 name = (string)row[NutrientName];
-                unit = new Unit();
+                unit = new Unit(id, name);
                 result = new Nutrient.Nutrient(id, name, unit);
             }
             else
@@ -155,7 +155,7 @@ namespace ahbsd.lib.Nutrients.Data
             {
                 id = (int)row[NutrientID];
                 name = (string)row[NutrientName];
-                unit = new Unit();
+                unit = new Unit(id, name);
                 tmp = new Nutrient.Nutrient(id, name, unit);
                 result.Add(tmp);
             }

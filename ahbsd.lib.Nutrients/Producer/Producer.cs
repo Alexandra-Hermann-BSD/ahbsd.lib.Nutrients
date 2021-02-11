@@ -19,6 +19,9 @@ using ahbsd.lib;
 
 namespace ahbsd.lib.Nutrients.Producer
 {
+    /// <summary>
+    /// A Class for a Producer of food.
+    /// </summary>
     public class Producer : Component, IProducer
     {
         private string _address;

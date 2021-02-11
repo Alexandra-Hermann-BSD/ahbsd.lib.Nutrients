@@ -21,14 +21,24 @@ using ahbsd.lib.Nutrients.Producer;
 
 namespace ahbsd.lib.Nutrients.Data
 {
+    /// <summary>
+    /// Class for a Table of Producer Data.
+    /// </summary>
     public class ProducerTable : DataTable, IProducerTable
     {
+        /// <summary>
+        /// Constructor without any parameters.
+        /// </summary>
         public ProducerTable()
             : base("Producer")
         {
             Initialize();
         }
 
+        /// <summary>
+        /// Constructor with a container.
+        /// </summary>
+        /// <param name="container">The Container.</param>
         public ProducerTable(IContainer container)
             : base("Producer")
         {
