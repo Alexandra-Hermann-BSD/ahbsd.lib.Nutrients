@@ -29,16 +29,19 @@ namespace ahbsd.lib.Nutrients.Nutrient
     {
         private readonly int nID;
         private readonly string nName;
+        private readonly string nAlternative;
         private CultureInfo culture;
         private IDictionary<CultureInfo, IOptionalUnit> optionalUnits;
 
         /// <summary>
         /// Constructor with id, name and unit.
+        /// [optional] the alternative name.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="name">The name.</param>
         /// <param name="unit">The unit.</param>
-        public Nutrient(int id, string name, IUnit unit)
+        /// <param name="alternative">[optional] The alternative name.</param>
+        public Nutrient(int id, string name, IUnit unit, string alternative = null)
             : base()
         {
             nID = id;
@@ -51,6 +54,8 @@ namespace ahbsd.lib.Nutrients.Nutrient
             {
                 throw new Exception($"Max length for name is 80; the length of \n'{name.Trim()}'\n is {name.Trim().Length} > 80!");
             }
+
+            nAlternative = alternative;
 
             Unit = unit;
 
@@ -62,12 +67,14 @@ namespace ahbsd.lib.Nutrients.Nutrient
 
         /// <summary>
         /// Constructor with id, name, unit and a container.
+        /// [optional] the alternative name.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="name">The name.</param>
         /// <param name="unit">The unit.</param>
         /// <param name="container">The component.</param>
-        public Nutrient(int id, string name, IUnit unit, IContainer container)
+        /// <param name="alternative">[optional] The alternative name.</param>
+        public Nutrient(int id, string name, IUnit unit, IContainer container, string alternative = null)
             : base()
         {
             nID = id;
@@ -80,6 +87,8 @@ namespace ahbsd.lib.Nutrients.Nutrient
             {
                 throw new Exception($"Max length for name is 80; the length of \n'{name.Trim()}'\n is {name.Trim().Length} > 80!");
             }
+
+            nAlternative = alternative;
 
             Unit = unit;
 
@@ -113,6 +122,11 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// </summary>
         /// <value>The name of the nutrient.</value>
         public string Name => nName;
+        /// <summary>
+        /// Gets the alternative name of the nutrient.
+        /// </summary>
+        /// <value>The alternative name of the nutrient.</value>
+        public string Alternative => nAlternative;
         /// <summary>
         /// Gets the display name of the nutrient.
         /// </summary>
@@ -161,6 +175,18 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// Gets a short wiew of this nutrient.
         /// </summary>
         /// <returns></returns>
-        public override string ToString() => $"{Name} {Unit}";
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder(Name);
+
+            if (!string.IsNullOrEmpty(Alternative))
+            {
+                stringBuilder.AppendFormat(" ({0})", Alternative);
+            }
+
+            stringBuilder.AppendFormat(" {0}", Unit);
+
+            return stringBuilder.ToString();
+        }
     }
 }

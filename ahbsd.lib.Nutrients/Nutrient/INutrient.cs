@@ -49,6 +49,11 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// <value>The name of the nutrient.</value>
         string Name { get; }
         /// <summary>
+        /// Gets the alternative name of the nutrient.
+        /// </summary>
+        /// <value>The alternative name of the nutrient.</value>
+        string Alternative { get; }
+        /// <summary>
         /// Gets the display name of the nutrient.
         /// </summary>
         /// <value>The display name of the nutrient.</value>

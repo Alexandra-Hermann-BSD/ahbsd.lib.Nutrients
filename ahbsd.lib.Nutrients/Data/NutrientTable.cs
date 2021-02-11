@@ -120,6 +120,7 @@ namespace ahbsd.lib.Nutrients.Data
             int id, uid;
             string name;
             string nutrientUnit;
+            string alternative;
             
             IUnit unit;
             DataRow row;
@@ -129,10 +130,11 @@ namespace ahbsd.lib.Nutrients.Data
                 row = Rows[rowID];
                 id = (int)row[NutrientID];
                 name = (string)row[NutrientName];
+                alternative = (string)row[NutrientAlternative];
                 nutrientUnit = (string)row[NutrientUnit];
                 uid = UnitTable.GetUID(nutrientUnit);
                 unit = new Unit(uid, nutrientUnit);
-                result = new Nutrient.Nutrient(id, name, unit);
+                result = new Nutrient.Nutrient(id, name, unit, Container, alternative);
             }
             else
             {
@@ -152,6 +154,7 @@ namespace ahbsd.lib.Nutrients.Data
             INutrient tmp;
             int id, uid;
             string name;
+            string alternative;
             string nutrientUnit;
             IUnit unit;
 
@@ -160,10 +163,20 @@ namespace ahbsd.lib.Nutrients.Data
             {
                 id = (int)row[NutrientID];
                 name = (string)row[NutrientName];
+
+                if (row[NutrientAlternative] != DBNull.Value)
+                {
+                    alternative = (string)row[NutrientAlternative];
+                }
+                else
+                {
+                    alternative = null;
+                }
+
                 nutrientUnit = (string)row[NutrientUnit];
                 uid = UnitTable.GetUID(nutrientUnit);
                 unit = new Unit(uid, nutrientUnit);
-                tmp = new Nutrient.Nutrient(id, name, unit);
+                tmp = new Nutrient.Nutrient(id, name, unit, Container, alternative);
                 result.Add(tmp);
             }
 
