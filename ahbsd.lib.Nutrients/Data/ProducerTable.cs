@@ -54,12 +54,12 @@ namespace ahbsd.lib.Nutrients.Data
         private void Initialize()
         {
             DataColumn pID = new DataColumn("pID", typeof(int));
-            DataColumn name = new DataColumn("name", typeof(SqlString));
-            DataColumn Address = new DataColumn("Address", typeof(SqlString));
-            DataColumn City = new DataColumn("City", typeof(SqlString));
-            DataColumn ZIP = new DataColumn("ZIP", typeof(SqlString));
-            DataColumn Country = new DataColumn("Country", typeof(SqlString));
-            DataColumn Website = new DataColumn("Website", typeof(SqlString));
+            DataColumn name = new DataColumn("name", typeof(string));
+            DataColumn Address = new DataColumn("Address", typeof(string));
+            DataColumn City = new DataColumn("City", typeof(string));
+            DataColumn ZIP = new DataColumn("ZIP", typeof(string));
+            DataColumn Country = new DataColumn("Country", typeof(string));
+            DataColumn Website = new DataColumn("Website", typeof(string));
 
             BeginInit();
 

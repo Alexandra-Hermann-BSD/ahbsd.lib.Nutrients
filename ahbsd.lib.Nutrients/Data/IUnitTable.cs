@@ -50,5 +50,12 @@ namespace ahbsd.lib.Nutrients.Data
         /// <c>null</c>.
         /// </returns>
         IList<IUnit> GetUnits();
+        /// <summary>
+        /// Gets the UnitID by it's name.
+        /// </summary>
+        /// <param name="name">The unit name.</param>
+        /// <returns>The unit ID.</returns>
+        /// <exception cref="Exception">If name is not available.</exception>
+        int GetUnitID(string name);
     }
 }

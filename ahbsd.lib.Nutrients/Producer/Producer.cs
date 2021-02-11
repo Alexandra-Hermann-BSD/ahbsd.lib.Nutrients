@@ -15,6 +15,7 @@
 using System;
 using System.ComponentModel;
 using System.Net.Sockets;
+using System.Text;
 using ahbsd.lib;
 
 namespace ahbsd.lib.Nutrients.Producer
@@ -332,5 +333,21 @@ namespace ahbsd.lib.Nutrients.Producer
             }
         }
         #endregion
+
+        /// <summary>
+        /// Returns a simple view of this Producer.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder(Name);
+
+            if (Website != null)
+            {
+                stringBuilder.Append($" | Web: {Website.Host}");
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }

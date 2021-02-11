@@ -50,8 +50,8 @@ namespace ahbsd.lib.Nutrients.Test
                 UnitTable = (UnitTable)dsNutrients.Tables["unit"];
                 ProducerTable = (ProducerTable)dsNutrients.Tables["producer"];
 
-                nutrients = NutrientTable.GetNutrients();
                 units = UnitTable.GetUnits();
+                nutrients = NutrientTable.GetNutrients();
                 producers = ProducerTable.GetProducer();
 
 

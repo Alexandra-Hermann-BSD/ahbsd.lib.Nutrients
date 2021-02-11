@@ -105,5 +105,11 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// <value>The value.</value>
         public double Value { get; set; }
         #endregion
+
+        /// <summary>
+        /// Returns the Unit (without it's number.
+        /// </summary>
+        /// <returns>The Unit.</returns>
+        public override string ToString() => Name;
     }
 }

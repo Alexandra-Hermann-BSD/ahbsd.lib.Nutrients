@@ -26,6 +26,14 @@ namespace ahbsd.lib.Nutrients.Data
     public class UnitTable : DataTable, IUnitTable
     {
         /// <summary>
+        /// Static constructor.
+        /// </summary>
+        static UnitTable()
+        {
+            KnownUnits = new List<IUnit>();
+        }
+
+        /// <summary>
         /// Constructor without any parameters.
         /// </summary>
         public UnitTable()
@@ -72,6 +80,12 @@ namespace ahbsd.lib.Nutrients.Data
 
             EndInit();
         }
+
+        /// <summary>
+        /// Gets a list of known units.
+        /// </summary>
+        /// <value>A list of known units.</value>
+        public static IList<IUnit> KnownUnits { get; private set; }
 
         #region implementation of IUnitTable
         /// <summary>
@@ -139,10 +153,65 @@ namespace ahbsd.lib.Nutrients.Data
 
                     result.Add(new Unit(id, name));
                 }
+
+                KnownUnits = result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the UnitID by it's name.
+        /// </summary>
+        /// <param name="name">The unit name.</param>
+        /// <returns>The unit ID.</returns>
+        /// <exception cref="Exception">If name is not available.</exception>
+        public int GetUnitID(string name)
+        {
+            int result = 0;
+            bool found = false;
+            IList<IUnit> units = GetUnits();
+
+            KnownUnits = units;
+
+            foreach (var unit in units)
+            {
+                if (unit.Name.Equals(name))
+                {
+                    found = true;
+                    result = unit.UID;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                throw new Exception($"'{name}' doesn't exists!");
             }
 
             return result;
         }
         #endregion
+
+        /// <summary>
+        /// Gets the UnitID by the unit's name or -1, if it wasn't found.
+        /// </summary>
+        /// <param name="name">The unit's name.</param>
+        /// <returns>The UnitID or -1, if it wasn't found.</returns>
+        public static int GetUID(string name)
+        {
+            int result = -1;
+
+            foreach (IUnit unit in KnownUnits)
+            {
+                if (unit.Name.Equals(name))
+                {
+                    result = unit.UID;
+                    break;
+                }
+            }
+
+            return result;
+        }
     }
 }

@@ -18,6 +18,7 @@ using ahbsd.lib;
 using System.ComponentModel;
 using ahbsd.lib.Nutrients.Measurement;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ahbsd.lib.Nutrients.Nutrient
 {
@@ -155,5 +156,11 @@ namespace ahbsd.lib.Nutrients.Nutrient
             }
         }
         #endregion
+
+        /// <summary>
+        /// Gets a short wiew of this nutrient.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString() => $"{Name} {Unit}";
     }
 }

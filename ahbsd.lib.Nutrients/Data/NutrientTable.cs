@@ -117,8 +117,10 @@ namespace ahbsd.lib.Nutrients.Data
         public INutrient GetNutrient(int rowID)
         {
             INutrient result;
-            int id;
+            int id, uid;
             string name;
+            string nutrientUnit;
+            
             IUnit unit;
             DataRow row;
 
@@ -127,7 +129,9 @@ namespace ahbsd.lib.Nutrients.Data
                 row = Rows[rowID];
                 id = (int)row[NutrientID];
                 name = (string)row[NutrientName];
-                unit = new Unit(id, name);
+                nutrientUnit = (string)row[NutrientUnit];
+                uid = UnitTable.GetUID(nutrientUnit);
+                unit = new Unit(uid, nutrientUnit);
                 result = new Nutrient.Nutrient(id, name, unit);
             }
             else
@@ -146,8 +150,9 @@ namespace ahbsd.lib.Nutrients.Data
         {
             IList<INutrient> result = new List<INutrient>(Rows.Count);
             INutrient tmp;
-            int id;
+            int id, uid;
             string name;
+            string nutrientUnit;
             IUnit unit;
 
 
@@ -155,7 +160,9 @@ namespace ahbsd.lib.Nutrients.Data
             {
                 id = (int)row[NutrientID];
                 name = (string)row[NutrientName];
-                unit = new Unit(id, name);
+                nutrientUnit = (string)row[NutrientUnit];
+                uid = UnitTable.GetUID(nutrientUnit);
+                unit = new Unit(uid, nutrientUnit);
                 tmp = new Nutrient.Nutrient(id, name, unit);
                 result.Add(tmp);
             }
