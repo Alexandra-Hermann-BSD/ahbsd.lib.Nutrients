@@ -12,12 +12,14 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
+using System.ComponentModel;
+
 namespace ahbsd.lib.Nutrients.Measurement
 {
     /// <summary>
     /// Interface for entries in the table Unit
     /// </summary>
-    public interface IUnit
+    public interface IUnit : IComponent
     {
         /// <summary>
         /// Gets the UnitID.

@@ -13,12 +13,14 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 using ahbsd.lib.Exceptions;
+using System.ComponentModel;
+
 namespace ahbsd.lib.Nutrients.Measurement
 {
     /// <summary>
     /// Class for entries in the table Unit. 
     /// </summary>
-    public struct Unit : IUnit
+    public class Unit : Component, IUnit
     {
         /// <summary>
         /// The UnitID.
@@ -36,6 +38,7 @@ namespace ahbsd.lib.Nutrients.Measurement
         /// <param name="name">The given name.</param>
         /// <exception cref="Exception{T}">If trimmed length of name is greater than 5.</exception>
         public Unit(int uid, string name)
+            : base()
         {
             Exception<string> ex;
             uID = uid;
@@ -51,6 +54,37 @@ namespace ahbsd.lib.Nutrients.Measurement
             }
 
             Value = 0.0;
+        }
+
+        /// <summary>
+        /// Constructor with a given ID, name and container.
+        /// </summary>
+        /// <param name="uid">The given ID.</param>
+        /// <param name="name">The given name.</param>
+        /// <param name="container">The container.</param>
+        /// <exception cref="Exception{T}">If trimmed length of name is greater than 5.</exception>
+        public Unit(int uid, string name, IContainer container)
+            : base()
+        {
+            Exception<string> ex;
+            uID = uid;
+
+            if (name.Trim().Length <= 5)
+            {
+                uName = name.Trim(); ;
+            }
+            else
+            {
+                ex = new Exception<string>($"Max size for name is 5, but {name.Trim()} is longer: {name.Trim().Length} > 5!", name.Trim());
+                throw ex;
+            }
+
+            Value = 0.0;
+
+            if (container != null)
+            {
+                container.Add(this, Name);
+            }
         }
 
         #region implementation of IUnit
