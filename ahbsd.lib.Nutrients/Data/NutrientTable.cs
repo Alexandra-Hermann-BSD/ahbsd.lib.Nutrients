@@ -13,6 +13,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using ahbsd.lib.Nutrients.Measurement;
@@ -23,7 +24,7 @@ namespace ahbsd.lib.Nutrients.Data
     /// <summary>
     /// Table for Nutrients.
     /// </summary>
-    public class NutrientTable : DataTable
+    public class NutrientTable : DataTable, INutrientTable
     {
         /// <summary>
         /// Constructor without amy parameters.
@@ -45,7 +46,7 @@ namespace ahbsd.lib.Nutrients.Data
 
             if (container != null)
             {
-                container.Add(this, "Nutrient");
+                container.Add(this, TableName);
             }
         }
 
@@ -85,6 +86,7 @@ namespace ahbsd.lib.Nutrients.Data
             EndInit();
         }
 
+        #region implementation of INutrientTable
         /// <summary>
         /// Gets the Column NutrientID.
         /// </summary>
@@ -135,5 +137,31 @@ namespace ahbsd.lib.Nutrients.Data
 
             return result;
         }
+
+        /// <summary>
+        /// Gets a list with all current Nutrients in the Rows.
+        /// </summary>
+        /// <returns>A list with all current Nutrients in the Rows.</returns>
+        public IList<INutrient> GetNutrients()
+        {
+            IList<INutrient> result = new List<INutrient>(Rows.Count);
+            INutrient tmp;
+            int id;
+            string name;
+            IUnit unit;
+
+
+            foreach (DataRow row in Rows)
+            {
+                id = (int)row[NutrientID];
+                name = (string)row[NutrientName];
+                unit = new Unit();
+                tmp = new Nutrient.Nutrient(id, name, unit);
+                result.Add(tmp);
+            }
+
+            return result;
+        }
+        #endregion
     }
 }
