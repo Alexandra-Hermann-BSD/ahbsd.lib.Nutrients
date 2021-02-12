@@ -40,7 +40,12 @@ namespace ahbsd.lib.Nutrients.Data
             : base("DSNutrients")
         {
             InitiateDS();
-            container.Add(this, "DSNutrients");
+
+            if (container != null)
+            {
+                container.Add(this, "DSNutrients");
+            }
+            
         }
 
         /// <summary>
@@ -52,13 +57,20 @@ namespace ahbsd.lib.Nutrients.Data
             NutrientTable Nutrient = new NutrientTable(Container);
             UnitTable Unit = new UnitTable(Container);
             ProducerTable Producer = new ProducerTable(Container);
+            FoodTable Food = new FoodTable(Container);
 
             BeginInit();
             Clear();
 
+            DataRelation foodProducer = new DataRelation("fk_food_producer", Producer.PID, Food.ProducerID);
+            
+
             Tables.Add(Nutrient);
             Tables.Add(Unit);
             Tables.Add(Producer);
+            Tables.Add(Food);
+
+            Relations.Add(foodProducer);
 
             EndInit();
         }
