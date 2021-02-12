@@ -20,8 +20,29 @@ namespace ahbsd.lib.Nutrients.Nutrient
 {
     public class Food : Component, IFood
     {
-        public Food()
+        public Food(int fid, string name, string defLng, int? pID = null, int? barcode = null)
+            : base()
         {
+            FID = fid;
+            Name = name.Trim();
+            DefaultLanguage = defLng.Trim();
+            ProducerID = pID;
+            Barcode = barcode;
+        }
+
+        public Food(int fid, string name, string defLng, int? pID = null, int? barcode = null, IContainer container)
+            : base()
+        {
+            FID = fid;
+            Name = name.Trim();
+            DefaultLanguage = defLng.Trim();
+            ProducerID = pID;
+            Barcode = barcode;
+
+            if (container != null)
+            {
+                container.Add(this, $"food[{fid}]");
+            }
         }
 
         #region implementation of IFood
