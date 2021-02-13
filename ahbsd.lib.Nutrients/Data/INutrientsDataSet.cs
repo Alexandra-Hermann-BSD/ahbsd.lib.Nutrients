@@ -40,5 +40,10 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The <see cref="FoodTable"/> Food.</value>
         FoodTable Food { get; }
+        /// <summary>
+        /// Gets the <see cref="VersionTable"/> Version.
+        /// </summary>
+        /// <value>The <see cref="VersionTable"/> Version.</value>
+        VersionTable Version { get; }
     }
 }

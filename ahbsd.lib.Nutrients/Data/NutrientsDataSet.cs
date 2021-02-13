@@ -58,21 +58,22 @@ namespace ahbsd.lib.Nutrients.Data
             UnitTable Unit = new UnitTable(Container);
             ProducerTable Producer = new ProducerTable(Container);
             FoodTable Food = new FoodTable(Container);
+            VersionTable Version = new VersionTable(Container);
 
             BeginInit();
             Clear();
-
-            
 
             Tables.Add(Nutrient);
             Tables.Add(Unit);
             Tables.Add(Producer);
             Tables.Add(Food);
-
+            Tables.Add(Version);
 
             DataRelation foodProducer = new DataRelation("fk_food_producer", Producer.PID, Food.ProducerID);
+            DataRelation versionFood = new DataRelation("fk_version_food", Food.FID, Version.FID);
 
             Relations.Add(foodProducer);
+            Relations.Add(versionFood);
 
             EndInit();
         }
@@ -98,6 +99,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The <see cref="FoodTable"/> Food.</value>
         public FoodTable Food => (FoodTable)Tables["food"];
+        /// <summary>
+        /// Gets the <see cref="VersionTable"/> Version.
+        /// </summary>
+        /// <value>The <see cref="VersionTable"/> Version.</value>
+        public VersionTable Version => (VersionTable)Tables["Version"];
         #endregion
     }
 }
