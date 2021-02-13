@@ -12,7 +12,6 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-using System;
 using System.ComponentModel;
 using System.Globalization;
 
@@ -20,7 +19,13 @@ namespace ahbsd.lib.Nutrients.Nutrient
 {
     public class Food : Component, IFood
     {
-        public Food(int fid, string name, string defLng, int? pID = null, int? barcode = null)
+        //*
+        public Food(
+            int fid,
+            string name,
+            string defLng,
+            int? pID = null,
+            ulong? barcode = null)
             : base()
         {
             FID = fid;
@@ -28,9 +33,15 @@ namespace ahbsd.lib.Nutrients.Nutrient
             DefaultLanguage = defLng.Trim();
             ProducerID = pID;
             Barcode = barcode;
-        }
+        } // */
 
-        public Food(int fid, string name, string defLng, int? pID = null, int? barcode = null, IContainer container)
+        public Food(
+            int fid,
+            string name,
+            string defLng,
+            IContainer container,
+            int? pID = null,
+            ulong? barcode = null)
             : base()
         {
             FID = fid;
@@ -74,7 +85,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// Gets the Barcode.
         /// </summary>
         /// <value>The Barcode.</value>
-        public int? Barcode { get; private set; }
+        public ulong? Barcode { get; private set; }
         #endregion
 
         /// <summary>

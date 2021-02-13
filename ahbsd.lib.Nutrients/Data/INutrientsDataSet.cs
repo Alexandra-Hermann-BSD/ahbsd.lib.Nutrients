@@ -35,5 +35,10 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The <see cref="ProducerTable"/> Producer.</value>
         ProducerTable Producer { get; }
+        /// <summary>
+        /// Gets the <see cref="FoodTable"/> Food.
+        /// </summary>
+        /// <value>The <see cref="FoodTable"/> Food.</value>
+        FoodTable Food { get; }
     }
 }

@@ -62,13 +62,15 @@ namespace ahbsd.lib.Nutrients.Data
             BeginInit();
             Clear();
 
-            DataRelation foodProducer = new DataRelation("fk_food_producer", Producer.PID, Food.ProducerID);
             
 
             Tables.Add(Nutrient);
             Tables.Add(Unit);
             Tables.Add(Producer);
             Tables.Add(Food);
+
+
+            DataRelation foodProducer = new DataRelation("fk_food_producer", Producer.PID, Food.ProducerID);
 
             Relations.Add(foodProducer);
 
@@ -91,6 +93,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The <see cref="ProducerTable"/> Producer.</value>
         public ProducerTable Producer => (ProducerTable)Tables["Producer"];
+        /// <summary>
+        /// Gets the <see cref="FoodTable"/> Food.
+        /// </summary>
+        /// <value>The <see cref="FoodTable"/> Food.</value>
+        public FoodTable Food => (FoodTable)Tables["food"];
         #endregion
     }
 }

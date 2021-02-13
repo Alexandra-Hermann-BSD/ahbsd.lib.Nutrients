@@ -25,7 +25,7 @@ namespace ahbsd.lib.Nutrients.Data
     /// <summary>
     /// A class to work with the data for Nutrition.
     /// </summary>
-    public partial class NutritionData : Container, INutritionData
+    public partial class NutritionData : Container
     {
         /// <summary>
         /// The connection string.
@@ -74,14 +74,24 @@ namespace ahbsd.lib.Nutrients.Data
             SQLiteDataAdapter nutrientDataAdapter;
             SQLiteDataAdapter unitDataAdapter;
             SQLiteDataAdapter producerDataAdapter;
+            SQLiteDataAdapter foodDataAdapter;
             NutrientsDataSet dsNutrient;
 
             // creating the database parts.
             connection = new SQLiteConnection(connectionString, true);
 
-            nutrientDataAdapter = new SQLiteDataAdapter("SELECT * FROM nutrient;", connection);
-            unitDataAdapter = new SQLiteDataAdapter("SELECT * FROM Unit;", connection);
-            producerDataAdapter = new SQLiteDataAdapter("SELECT * FROM Producer;", connection);
+            nutrientDataAdapter
+                = new SQLiteDataAdapter("SELECT * FROM nutrient;",
+                connection);
+            unitDataAdapter
+                = new SQLiteDataAdapter("SELECT * FROM Unit;",
+                connection);
+            producerDataAdapter
+                = new SQLiteDataAdapter("SELECT * FROM Producer;",
+                connection);
+            foodDataAdapter
+                = new SQLiteDataAdapter("SELECT * FROM food;",
+                connection);
 
             dsNutrient = new NutrientsDataSet(this);
 
@@ -90,13 +100,19 @@ namespace ahbsd.lib.Nutrients.Data
             Add(nutrientDataAdapter, "NutrientDataAdapter");
             Add(unitDataAdapter, "UnitDataAdapter");
             Add(producerDataAdapter, "ProducerDataAdapter");
+            Add(foodDataAdapter, "FoodDataAdapter");
 
             // adding event handlers
             Connection.StateChange += Connection_StateChange;
             NutrientDataAdapter.FillError += DataAdapter_FillError;
             NutrientDataAdapter.RowUpdated += DataAdapter_RowUpdated;
-            unitDataAdapter.FillError += DataAdapter_FillError;
-            unitDataAdapter.RowUpdated += DataAdapter_RowUpdated;
+            UnitDataAdapter.FillError += DataAdapter_FillError;
+            UnitDataAdapter.RowUpdated += DataAdapter_RowUpdated;
+            ProducerDataAdapter.FillError += DataAdapter_FillError;
+            ProducerDataAdapter.RowUpdated += DataAdapter_RowUpdated;
+            FoodDataAdapter.FillError += DataAdapter_FillError;
+            FoodDataAdapter.RowUpdated += DataAdapter_RowUpdated;
+
         }
 
         private void Connection_StateChange(object sender, StateChangeEventArgs e)
@@ -109,147 +125,6 @@ namespace ahbsd.lib.Nutrients.Data
 
         private void DataAdapter_FillError(object sender, FillErrorEventArgs e)
         {
-        }
-
-        #region implementation of INutritionData
-        /// <summary>
-        /// Happenes if the <see cref="ConnectionString"/> has changes.
-        /// </summary>
-        public event ChangeEventHandler<string> OnConnectionChanged;
-
-        /// <summary>
-        /// Gets the <see cref="SQLiteConnection"/>.
-        /// </summary>
-        /// <value>The SQLiteConnection.</value>
-        public SQLiteConnection Connection
-            => (SQLiteConnection)Components["Connection"];
-
-        /// <summary>
-        /// Gets the <see cref="SQLiteDataAdapter"/>.
-        /// </summary>
-        /// <value>The SQLiteDataAdapter.</value>
-        public SQLiteDataAdapter NutrientDataAdapter
-            => (SQLiteDataAdapter)Components["NutrientDataAdapter"];
-
-        /// <summary>
-        /// Gets the <see cref="SQLiteDataAdapter"/>.
-        /// </summary>
-        /// <value>The SQLiteDataAdapter.</value>
-        public SQLiteDataAdapter UnitDataAdapter
-            => (SQLiteDataAdapter)Components["UnitDataAdapter"];
-
-        /// <summary>
-        /// Gets the <see cref="SQLiteDataAdapter"/>.
-        /// </summary>
-        /// <value>The SQLiteDataAdapter.</value>
-        public SQLiteDataAdapter ProducerDataAdapter
-            => (SQLiteDataAdapter)Components["ProducerDataAdapter"];
-
-        /// <summary>
-        /// Gets the <see cref="DataSet"/> DSNutrients.
-        /// </summary>
-        /// <value>The <see cref="DataSet"/> DSNutrients.</value>
-        public DataSet DSNutrients => (DataSet)Components["DSNutrients"];
-
-        /// <summary>
-        /// Gets or sets the ConnectionString.
-        /// </summary>
-        /// <value>The ConnectionString.</value>
-        public string ConnectionString
-        {
-            get => connectionString;
-            set
-            {
-                bool wasConnected = false;
-
-                if (!string.IsNullOrEmpty(value)
-                    && !value.Equals(connectionString))
-                {
-                    ChangeEventArgs<string> cea
-                        = new ChangeEventArgs<string>(connectionString, value);
-
-                    if (Connection.State == ConnectionState.Open)
-                    {
-                        Connection.Close();
-                        wasConnected = true;
-                    }
-
-                    connectionString = value;
-                    Connection.ConnectionString = connectionString;
-
-                    OnConnectionChanged?.Invoke(this, cea);
-
-                    if (wasConnected)
-                    {
-                        try
-                        {
-                            Connection.Open();
-                        }
-                        catch (Exception)
-                        { }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Fills the Dataset with nutrients.Unit data
-        /// </summary>
-        /// <returns>The amount of Rows.</returns>
-        public int FillUnits()
-        {
-            return UnitDataAdapter.Fill(DSNutrients, "Unit");
-        }
-
-        /// <summary>
-        /// Fills the DataSet with nutrients.nutrient data.
-        /// </summary>
-        /// <returns>The amount of Rows.</returns>
-        public int FillNutrients()
-        {
-            return NutrientDataAdapter.Fill(DSNutrients, "Nutrient");
-        }
-
-        /// <summary>
-        /// Fills the DataSet with nutrients.Producer data.
-        /// </summary>
-        /// <returns>The Amount of Rows.</returns>
-        public int FillProducer()
-        {
-            return ProducerDataAdapter.Fill(DSNutrients, "Producer");
-        }
-
-        /// <summary>
-        /// Fills the Dataset with all data.
-        /// </summary>
-        /// <returns>The amount of all Rows.</returns>
-        public int FillAll()
-        {
-            int result = 0;
-
-            result += FillUnits();
-            result += FillNutrients();
-            result += FillProducer();
-
-            return result;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Creates a DataSource.
-        /// </summary>
-        /// <param name="dbName">The name of the database.</param>
-        /// <returns>The created DataSource.</returns>
-        public static string CreateDataSource(string dbName)
-        {
-            SQLiteConnectionStringBuilder sb;
-
-            sb = new SQLiteConnectionStringBuilder(string.Format(dataSourceFmt, dbName));
-            sb.JournalMode = SQLiteJournalModeEnum.Default;
-            sb.SyncMode = SynchronizationModes.Full;
-
-            return sb.ToString();
         }
 
     }

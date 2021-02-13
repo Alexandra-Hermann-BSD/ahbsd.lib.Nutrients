@@ -50,7 +50,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// Gets the Barcode.
         /// </summary>
         /// <value>The Barcode.</value>
-        int? Barcode { get; }
+        ulong? Barcode { get; }
 
     }
 }

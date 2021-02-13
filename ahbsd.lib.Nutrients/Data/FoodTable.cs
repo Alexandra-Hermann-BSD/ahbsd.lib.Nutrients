@@ -45,23 +45,27 @@ namespace ahbsd.lib.Nutrients.Data
             DataColumn Name = new DataColumn("name", typeof(string));
             DataColumn DefaultLanguage = new DataColumn("defaultLanguage", typeof(string));
             DataColumn ProducerID = new DataColumn("producerID", typeof(int));
-            DataColumn Barcode = new DataColumn("barcode", typeof(int));
+            DataColumn Barcode = new DataColumn("barcode", typeof(ulong));
 
             BeginInit();
             FID.AllowDBNull = false;
             FID.AutoIncrement = true;
+            FID.Caption = "ID";
 
             Name.AllowDBNull = false;
+            Name.Caption = "Name";
 
+            DefaultLanguage.Caption = "Language";
             DefaultLanguage.AllowDBNull = false;
             DefaultLanguage.MaxLength = 3;
 
+            ProducerID.Caption = "Producer ID";
             ProducerID.AllowDBNull = true;
             ProducerID.DefaultValue = DBNull.Value;
 
+            Barcode.Caption = "Barcode";
             Barcode.AllowDBNull = true;
             Barcode.DefaultValue = DBNull.Value;
-            Barcode.MaxLength = 16;
 
             Columns.Add(FID);
             Columns.Add(Name);
@@ -107,7 +111,8 @@ namespace ahbsd.lib.Nutrients.Data
         {
             IFood result = null;
             int fid;
-            int? producerID, barcode;
+            int? producerID;
+            ulong? barcode;
             string name, defaultLng;
             DataRow row;
 
@@ -133,10 +138,10 @@ namespace ahbsd.lib.Nutrients.Data
                 }
                 else
                 {
-                    barcode = (int)row[Barcode];
+                    barcode = (ulong)row[Barcode];
                 }
 
-                result = new Food(fid, name, defaultLng, producerID, barcode, Container);
+                result = new Food(fid, name, defaultLng, Container, producerID, barcode);
             }
 
             return result;
@@ -149,7 +154,8 @@ namespace ahbsd.lib.Nutrients.Data
         {
             IList<IFood> result = new List<IFood>(Rows.Count);
             int fid;
-            int? producerID, barcode;
+            int? producerID;
+            ulong? barcode;
             string name, defaultLng;
             IFood tmpFood;
 
@@ -174,10 +180,10 @@ namespace ahbsd.lib.Nutrients.Data
                 }
                 else
                 {
-                    barcode = (int)row[Barcode];
+                    barcode = (ulong)row[Barcode];
                 }
 
-                tmpFood = new Food(fid, name, defaultLng, producerID, barcode, Container);
+                tmpFood = new Food(fid, name, defaultLng, Container, producerID, barcode);
                 result.Add(tmpFood);
             }
 
