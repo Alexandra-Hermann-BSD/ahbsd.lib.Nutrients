@@ -24,6 +24,8 @@ namespace ahbsd.lib.Nutrients.Test
             UnitTable UnitTable;
             ProducerTable ProducerTable;
             FoodTable FoodTable;
+            VersionTable VersionTable;
+
             CultureInfo culture = new CultureInfo("de-DE");
 
             Console.WriteLine("Test");
@@ -40,6 +42,8 @@ namespace ahbsd.lib.Nutrients.Test
                 IList<INutrient> nutrients;
                 IList<IUnit> units;
                 IList<IProducer> producers;
+                IList<IFood> foods;
+                IList<IVersion> versions;
 
                 double g, oz;
 
@@ -49,10 +53,13 @@ namespace ahbsd.lib.Nutrients.Test
                 UnitTable = (UnitTable)dsNutrients.Tables["unit"];
                 ProducerTable = (ProducerTable)dsNutrients.Tables["producer"];
                 FoodTable = (FoodTable)dsNutrients.Tables["food"];
+                VersionTable = (VersionTable)dsNutrients.Tables["Version"];
 
                 units = UnitTable.GetUnits();
                 nutrients = NutrientTable.GetNutrients();
                 producers = ProducerTable.GetProducer();
+                foods = FoodTable.GetFoods();
+                versions = VersionTable.GetVersions();
 
                 foreach (INutrient nutrient in nutrients)
                 {
@@ -68,6 +75,7 @@ namespace ahbsd.lib.Nutrients.Test
                 ConsolePrintTable.Print(NutrientTable);
                 ConsolePrintTable.Print(ProducerTable);
                 ConsolePrintTable.Print(FoodTable);
+                ConsolePrintTable.Print(VersionTable);
             } 
 
             data.Connection.Close();

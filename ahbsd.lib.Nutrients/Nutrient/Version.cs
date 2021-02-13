@@ -23,7 +23,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
         private IFood food;
         private DateTime firstdate;
 
-        public Version(int vID, int fID, IFood? f = null, DateTime? firstDate = null)
+        public Version(int vID, int fID, IFood f = null, DateTime? firstDate = null)
             : base()
         {
             vid = vID;

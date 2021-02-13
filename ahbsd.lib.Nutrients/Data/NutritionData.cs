@@ -75,6 +75,7 @@ namespace ahbsd.lib.Nutrients.Data
             SQLiteDataAdapter unitDataAdapter;
             SQLiteDataAdapter producerDataAdapter;
             SQLiteDataAdapter foodDataAdapter;
+            SQLiteDataAdapter versionDataAdapter;
             NutrientsDataSet dsNutrient;
 
             // creating the database parts.
@@ -92,6 +93,9 @@ namespace ahbsd.lib.Nutrients.Data
             foodDataAdapter
                 = new SQLiteDataAdapter("SELECT * FROM food;",
                 connection);
+            versionDataAdapter
+                = new SQLiteDataAdapter("SELECT * FROM Version;",
+                connection);
 
             dsNutrient = new NutrientsDataSet(this);
 
@@ -101,6 +105,7 @@ namespace ahbsd.lib.Nutrients.Data
             Add(unitDataAdapter, "UnitDataAdapter");
             Add(producerDataAdapter, "ProducerDataAdapter");
             Add(foodDataAdapter, "FoodDataAdapter");
+            Add(versionDataAdapter, "VersionDataAdapter");
 
             // adding event handlers
             Connection.StateChange += Connection_StateChange;
@@ -112,6 +117,8 @@ namespace ahbsd.lib.Nutrients.Data
             ProducerDataAdapter.RowUpdated += DataAdapter_RowUpdated;
             FoodDataAdapter.FillError += DataAdapter_FillError;
             FoodDataAdapter.RowUpdated += DataAdapter_RowUpdated;
+            VersionDataAdapter.FillError += DataAdapter_FillError;
+            VersionDataAdapter.RowUpdated += DataAdapter_RowUpdated;
 
         }
 
@@ -121,10 +128,17 @@ namespace ahbsd.lib.Nutrients.Data
 
         private void DataAdapter_RowUpdated(object sender, RowUpdatedEventArgs e)
         {
+#if DEBUG
+            Console.WriteLine($"RowUpdated from '{sender}': {e.Status}");
+#endif
         }
 
         private void DataAdapter_FillError(object sender, FillErrorEventArgs e)
         {
+#if DEBUG
+            Console.WriteLine($"FillError from '{sender}' / {e.DataTable.TableName}:\n" +
+                $"{e.Errors.GetType()}\nMessage: {e.Errors.Message}");
+#endif
         }
 
     }
