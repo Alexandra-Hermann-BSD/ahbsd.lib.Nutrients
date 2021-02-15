@@ -20,14 +20,24 @@ using ahbsd.lib.Nutrients.Nutrient;
 
 namespace ahbsd.lib.Nutrients.Data
 {
+    /// <summary>
+    /// The class for the Food Table.
+    /// </summary>
     public class FoodTable : DataTable, IFoodTable
     {
+        /// <summary>
+        /// Constructor without container.
+        /// </summary>
         public FoodTable()
             : base("food")
         {
             Initialize();
         }
 
+        /// <summary>
+        /// Constructor with container.
+        /// </summary>
+        /// <param name="container">The container.</param>
         public FoodTable(IContainer container)
             : base("food")
         {
@@ -39,6 +49,9 @@ namespace ahbsd.lib.Nutrients.Data
             }
         }
 
+        /// <summary>
+        /// Initializes this object.
+        /// </summary>
         private void Initialize()
         {
             DataColumn FID = new DataColumn("fID", typeof(int));
@@ -46,6 +59,7 @@ namespace ahbsd.lib.Nutrients.Data
             DataColumn DefaultLanguage = new DataColumn("defaultLanguage", typeof(string));
             DataColumn ProducerID = new DataColumn("producerID", typeof(int));
             DataColumn Barcode = new DataColumn("barcode", typeof(ulong));
+            DataColumn[] pk = new DataColumn[1];
 
             BeginInit();
             FID.AllowDBNull = false;
@@ -72,6 +86,10 @@ namespace ahbsd.lib.Nutrients.Data
             Columns.Add(DefaultLanguage);
             Columns.Add(ProducerID);
             Columns.Add(Barcode);
+
+            pk[0] = FID;
+            PrimaryKey = pk;
+
             EndInit();
         }
 

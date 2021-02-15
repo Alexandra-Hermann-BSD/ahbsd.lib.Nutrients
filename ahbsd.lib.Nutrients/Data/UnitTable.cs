@@ -62,21 +62,25 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         private void Initialize()
         {
-            DataColumn UnitID = new DataColumn("uID", typeof(int));
-            DataColumn UnitName = new DataColumn("name", typeof(string));
+            DataColumn unitID = new DataColumn("uID", typeof(int));
+            DataColumn unitName = new DataColumn("name", typeof(string));
+            DataColumn[] pk = new DataColumn[1];
 
             BeginInit();
 
-            Columns.Add(UnitID);
-            Columns.Add(UnitName);
+            Columns.Add(unitID);
+            Columns.Add(unitName);
 
-            Columns["uID"].AutoIncrement = true;
-            Columns["uID"].AllowDBNull = false;
-            Columns["uID"].Caption = "ID";
+            UnitID.AutoIncrement = true;
+            UnitID.AllowDBNull = false;
+            UnitID.Caption = "ID";
 
-            Columns["name"].AllowDBNull = false;
-            Columns["name"].Caption = "Unit";
-            Columns["name"].MaxLength = 5;
+            UnitName.AllowDBNull = false;
+            UnitName.Caption = "Unit";
+            UnitName.MaxLength = 5;
+
+            pk[0] = UnitID;
+            PrimaryKey = pk;
 
             EndInit();
         }
@@ -207,6 +211,27 @@ namespace ahbsd.lib.Nutrients.Data
                 if (unit.Name.Equals(name))
                 {
                     result = unit.UID;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the UnitID by the unit's id or <c>null</c>, if it wasn't found.
+        /// </summary>
+        /// <param name="id">The unit's id.</param>
+        /// <returns>The UnitID or <c>null</c>, if it wasn't found.</returns>
+        public static IUnit GetKnownUnit(int id)
+        {
+            IUnit result = null;
+
+            foreach (IUnit unit in KnownUnits)
+            {
+                if (unit.UID.Equals(id))
+                {
+                    result = unit;
                     break;
                 }
             }
