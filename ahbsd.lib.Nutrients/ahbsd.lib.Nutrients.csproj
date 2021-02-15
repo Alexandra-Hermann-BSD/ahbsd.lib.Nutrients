@@ -47,6 +47,7 @@ some versioning tool for nutrition data. </Description>
     <Folder Include="Nutrient\" />
     <Folder Include="Measurement\" />
     <Folder Include="Producer\" />
+    <Folder Include="Data\Creator\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Data\nutrients.db">
