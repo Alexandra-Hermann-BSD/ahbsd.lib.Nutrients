@@ -17,9 +17,19 @@ using System.Globalization;
 
 namespace ahbsd.lib.Nutrients.Nutrient
 {
+    /// <summary>
+    /// Class for a Food.
+    /// </summary>
     public class Food : Component, IFood
     {
-        //*
+        /// <summary>
+        /// Constructor without container.
+        /// </summary>
+        /// <param name="fid">The food ID.</param>
+        /// <param name="name">The food name.</param>
+        /// <param name="defLng">The default language.</param>
+        /// <param name="pID">[optional] The ProducerID.</param>
+        /// <param name="barcode">[optional] The Barcode.</param>
         public Food(
             int fid,
             string name,
@@ -33,8 +43,17 @@ namespace ahbsd.lib.Nutrients.Nutrient
             DefaultLanguage = defLng.Trim();
             ProducerID = pID;
             Barcode = barcode;
-        } // */
+        }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="fid">The food ID.</param>
+        /// <param name="name">The food name.</param>
+        /// <param name="defLng">The default language.</param>
+        /// <param name="container">The container.</param>
+        /// <param name="pID">[optional] The ProducerID.</param>
+        /// <param name="barcode">[optional] The Barcode.</param>
         public Food(
             int fid,
             string name,

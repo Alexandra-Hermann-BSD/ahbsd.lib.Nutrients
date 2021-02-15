@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ahbsd.lib.Nutrients.Nutrient;
 using ahbsd.lib.Nutrients.Producer;
+using ahbsd.lib.Nutrients.Data.Creator;
 using ahbsd.lib.Tools;
 
 namespace ahbsd.lib.Nutrients.Test
@@ -17,6 +18,7 @@ namespace ahbsd.lib.Nutrients.Test
     {
         static void Main(string[] args)
         {
+            DBTool tool;
             SQLiteErrorCode liteErrorCode;
             NutrientsDataSet dsNutrients;
 
@@ -28,8 +30,21 @@ namespace ahbsd.lib.Nutrients.Test
 
             CultureInfo culture = new CultureInfo("de-DE");
 
+            IProducer tmp = new Producer.Producer(-1, "Test", "Nirgendwo", "Villingen", "78050", "DE", null);
+
             Console.WriteLine("Test");
             Console.WriteLine("====");
+
+            tool = new DBTool();
+
+            try
+            {
+                bool b = tool.CheckExistance();
+
+                Console.WriteLine($"tool returned {b}");
+            }
+            catch (Exception)
+            { }
 
             NutritionData data = new NutritionData();
 
@@ -47,6 +62,8 @@ namespace ahbsd.lib.Nutrients.Test
 
                 double g, oz;
 
+                
+
                 dsNutrients = (NutrientsDataSet)data.DSNutrients;
 
                 NutrientTable = (NutrientTable)dsNutrients.Tables["nutrient"];
@@ -60,6 +77,9 @@ namespace ahbsd.lib.Nutrients.Test
                 producers = ProducerTable.GetProducer();
                 foods = FoodTable.GetFoods();
                 versions = VersionTable.GetVersions();
+
+                // ProducerTable.Insert(tmp, data.Connection);
+                SQLiteCommand tmp2 = data.GetProducerInsert(tmp);
 
                 foreach (INutrient nutrient in nutrients)
                 {

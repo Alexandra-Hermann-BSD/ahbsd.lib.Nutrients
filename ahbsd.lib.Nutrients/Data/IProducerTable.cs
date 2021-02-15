@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using ahbsd.lib.Nutrients.Producer;
 
 namespace ahbsd.lib.Nutrients.Data
@@ -72,5 +73,12 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <returns>A list of all producers from rows.</returns>
         IList<IProducer> GetProducer();
+        /// <summary>
+        /// Inserts a producer to the database.
+        /// </summary>
+        /// <param name="producer">The producerto insert.</param>
+        /// <param name="connection">The Connection.</param>
+        /// <returns><c>true</c> if </returns>
+        bool Insert(IProducer producer, SQLiteConnection connection);
     }
 }

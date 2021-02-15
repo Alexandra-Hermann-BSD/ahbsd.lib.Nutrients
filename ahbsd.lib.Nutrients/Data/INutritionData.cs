@@ -52,6 +52,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// Gets the <see cref="SQLiteDataAdapter"/>.
         /// </summary>
         /// <value>The SQLiteDataAdapter.</value>
+        SQLiteDataAdapter FoodnutrientDataAdapter { get; }
+        /// <summary>
+        /// Gets the <see cref="SQLiteDataAdapter"/>.
+        /// </summary>
+        /// <value>The SQLiteDataAdapter.</value>
         SQLiteDataAdapter VersionDataAdapter { get; }
         /// <summary>
         /// Gets the <see cref="DataSet"/> DSNutrients.
@@ -89,6 +94,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <returns>The Amount of Rows.</returns>
         int FillFood();
+        /// <summary>
+        /// Fills the DataSet with nutrients.food data.
+        /// </summary>
+        /// <returns>The Amount of Rows.</returns>
+        int FillFoodnutrient();
         /// <summary>
         /// Fills the DataSet with nutrients.food data.
         /// </summary>

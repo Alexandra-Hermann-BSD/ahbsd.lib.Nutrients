@@ -19,6 +19,8 @@ using System.Data.Common;
 using System.Data.SQLite;
 using System.Data.SQLite.Generic;
 using System.Linq;
+using System.Text;
+using ahbsd.lib.Nutrients.Producer;
 
 namespace ahbsd.lib.Nutrients.Data
 {
@@ -40,7 +42,7 @@ namespace ahbsd.lib.Nutrients.Data
         /// <summary>
         /// The default format for data-sources.
         /// </summary>
-        protected const string dataSourceFmt = "Data Source=Data/{0}.db";
+        protected internal const string dataSourceFmt = "Data Source=Data/{0}.db";
 
         /// <summary>
         /// Constructor without parameters.
@@ -75,6 +77,7 @@ namespace ahbsd.lib.Nutrients.Data
             SQLiteDataAdapter unitDataAdapter;
             SQLiteDataAdapter producerDataAdapter;
             SQLiteDataAdapter foodDataAdapter;
+            SQLiteDataAdapter foodnutrientDataAdapter;
             SQLiteDataAdapter versionDataAdapter;
             NutrientsDataSet dsNutrient;
 
@@ -93,6 +96,9 @@ namespace ahbsd.lib.Nutrients.Data
             foodDataAdapter
                 = new SQLiteDataAdapter("SELECT * FROM food;",
                 connection);
+            foodnutrientDataAdapter
+                = new SQLiteDataAdapter("SELECT * FROM foodnutrient;",
+                connection);
             versionDataAdapter
                 = new SQLiteDataAdapter("SELECT * FROM Version;",
                 connection);
@@ -105,7 +111,10 @@ namespace ahbsd.lib.Nutrients.Data
             Add(unitDataAdapter, "UnitDataAdapter");
             Add(producerDataAdapter, "ProducerDataAdapter");
             Add(foodDataAdapter, "FoodDataAdapter");
+            Add(foodnutrientDataAdapter, "FoodnutrientDataAdapter");
             Add(versionDataAdapter, "VersionDataAdapter");
+
+            ProducerDataAdapter.InsertCommand = GetProducerInsert();
 
             // adding event handlers
             Connection.StateChange += Connection_StateChange;
@@ -117,6 +126,8 @@ namespace ahbsd.lib.Nutrients.Data
             ProducerDataAdapter.RowUpdated += DataAdapter_RowUpdated;
             FoodDataAdapter.FillError += DataAdapter_FillError;
             FoodDataAdapter.RowUpdated += DataAdapter_RowUpdated;
+            FoodnutrientDataAdapter.FillError += DataAdapter_FillError;
+            FoodnutrientDataAdapter.RowUpdated += DataAdapter_RowUpdated;
             VersionDataAdapter.FillError += DataAdapter_FillError;
             VersionDataAdapter.RowUpdated += DataAdapter_RowUpdated;
 
@@ -139,6 +150,87 @@ namespace ahbsd.lib.Nutrients.Data
             Console.WriteLine($"FillError from '{sender}' / {e.DataTable.TableName}:\n" +
                 $"{e.Errors.GetType()}\nMessage: {e.Errors.Message}");
 #endif
+        }
+
+        /// <summary>
+        /// Create a <see cref="SQLiteCommand"/> to insert a producer.
+        /// </summary>
+        /// <returns>The created <see cref="SQLiteCommand"/>.</returns>
+        protected SQLiteCommand GetProducerInsert()
+        {
+            SQLiteCommand result = new SQLiteCommand(Connection);
+
+            result.Parameters.Add("$name", DbType.String);
+            result.Parameters["$name"].SourceColumn = "name";
+            result.Parameters["$name"].IsNullable = false;
+            result.Parameters.Add("$Address", DbType.String);
+            result.Parameters["$Address"].SourceColumn = "Address";
+            result.Parameters["$Address"].IsNullable = false;
+            result.Parameters.Add("$City", DbType.String);
+            result.Parameters["$City"].SourceColumn = "City";
+            result.Parameters["$City"].IsNullable = false;
+            result.Parameters.Add("$ZIP", DbType.String);
+            result.Parameters["$ZIP"].SourceColumn = "ZIP";
+            result.Parameters["$ZIP"].IsNullable = true;
+            result.Parameters.Add("$Country", DbType.String, 3);
+            result.Parameters["$Country"].SourceColumn = "Country";
+            result.Parameters["$Country"].IsNullable = false;
+            result.Parameters.Add("$Website", DbType.String);
+            result.Parameters["$Website"].SourceColumn = "Website";
+            result.Parameters["$Website"].IsNullable = true;
+
+            result.CommandText = "INSERT INTO producer " +
+                "(name, Address, City, ZIP, Country, Website) " +
+                "VALUES($name, $Address, $City, $ZIP, $Country, $Website);";
+
+
+            return result;
+        }
+
+        /// <summary>
+        /// Create a <see cref="SQLiteCommand"/> to insert a given producer.
+        /// </summary>
+        /// <param name="producer">The given producer.</param>
+        /// <returns>The created <see cref="SQLiteCommand"/>.</returns>
+        public SQLiteCommand GetProducerInsert(IProducer producer)
+        {
+            SQLiteCommand result = new SQLiteCommand(Connection);
+
+            StringBuilder[] builders = new StringBuilder[2];
+            builders[0] = new StringBuilder("INSERT INTO producer (");
+            builders[1] = new StringBuilder("VALUES(");
+
+            builders[0].Append("name, ");
+            builders[1].AppendFormat("'{0}', ", producer.Name);
+            builders[0].Append("Address, ");
+            builders[1].AppendFormat("'{0}', ", producer.Address);
+            builders[0].Append("City, ");
+            builders[1].AppendFormat("'{0}', ", producer.City);
+
+            if (!string.IsNullOrEmpty(producer.ZIP))
+            {
+                builders[0].Append("ZIP, ");
+                builders[1].AppendFormat("'{0}', ", producer.ZIP);
+            }
+
+            builders[0].Append("Country");
+            builders[1].AppendFormat("'{0}'", producer.Country);
+
+            if (producer.Website != null)
+            {
+                builders[0].Append(", Website");
+                builders[1].AppendFormat(", '{0}'", producer.Website.AbsolutePath);
+            }
+
+            builders[0].Append(") ");
+            builders[1].Append(");");
+
+            result.CommandText = builders[0].ToString() + builders[1].ToString();
+
+            result.Prepare();
+
+            ProducerDataAdapter.InsertCommand = result;
+            return result;
         }
 
     }

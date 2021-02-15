@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Data.SqlTypes;
 using ahbsd.lib.Nutrients.Producer;
 
@@ -140,7 +141,7 @@ namespace ahbsd.lib.Nutrients.Data
         /// <exception cref="Exception">If rowID doesn't exists.</exception>
         public IProducer GetProducer(int rowID)
         {
-            IProducer result = null;
+            IProducer result;
             int id;
             string name, address, city, zip, country, website;
             DataRow row;
@@ -183,9 +184,23 @@ namespace ahbsd.lib.Nutrients.Data
                 name = (string)row[Name];
                 address = (string)row[Address];
                 city = (string)row[City];
-                zip = (string)row[ZIP];
+                if (row[ZIP] != null && !row[ZIP].Equals(DBNull.Value))
+                {
+                    zip = (string)row[ZIP];
+                }
+                else
+                {
+                    zip = null;
+                }                
                 country = (string)row[Country];
-                website = (string)row[Website];
+                if (row[Website] != null && !row[Website].Equals(DBNull.Value))
+                {
+                    website = (string)row[Website];
+                }
+                else
+                {
+                    website = null;
+                }
 
                 tmp = new Producer.Producer(id, name, address, city, zip, country, website, Container);
                 result.Add(tmp);
@@ -195,6 +210,69 @@ namespace ahbsd.lib.Nutrients.Data
         }
 
 
+        /// <summary>
+        /// Inserts a producer to the database.
+        /// </summary>
+        /// <param name="producer">The producerto insert.</param>
+        /// <param name="connection">The Connection.</param>
+        /// <returns><c>true</c> if </returns>
+        public bool Insert(IProducer producer, SQLiteConnection connection)
+        {
+            bool result = false;
+            SQLiteCommand command1 = new SQLiteCommand(connection);
+            SQLiteTransaction transaction;
+            Uri producerUri = producer.Website;
+            string producerUriString = null;
+
+            if (producerUri != null)
+            {
+                producerUriString = producerUri.ToString();
+            }
+
+            string[] insertParts = new string[2];
+            string command;
+
+            insertParts[0] = "INSERT INTO PRODUCER (name, Address, city,";
+            insertParts[1] = "VALUES('{0}', '{1}', '{2}',";
+
+            if (!string.IsNullOrEmpty(producer.ZIP))
+            {
+                insertParts[0] += " ZIP,";
+                insertParts[1] += " '{3}',";
+            }
+
+            insertParts[0] += " Country";
+            insertParts[1] += " '{4}'";
+
+            if (producer.Website != null && !producer.Website.ToString().Trim().Equals(string.Empty))
+            {
+                insertParts[0] += ", Website";
+                insertParts[1] += ", '{5}'";
+            }
+
+            insertParts[0] += ") ";
+            insertParts[1] += ");";
+
+            command = string.Join(' ', insertParts);
+            command1.CommandText = string.Format(command, producer.Name, producer.Address, producer.City, producer.ZIP, producer.Country, producerUriString);
+
+            transaction = connection.BeginTransaction();
+
+            result = command1.ExecuteNonQuery() == 1;
+
+            if (result)
+            {
+                transaction.Commit();
+            }
+            else
+            {
+                transaction.Rollback();
+            }
+
+            transaction.Dispose();
+
+            return result;
+        }
         #endregion
     }
 }

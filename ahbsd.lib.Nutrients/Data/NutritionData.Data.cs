@@ -61,6 +61,13 @@ namespace ahbsd.lib.Nutrients.Data
         /// <value>The SQLiteDataAdapter.</value>
         public SQLiteDataAdapter FoodDataAdapter
             => (SQLiteDataAdapter)Components["FoodDataAdapter"];
+
+        /// <summary>
+        /// Gets the <see cref="SQLiteDataAdapter"/>.
+        /// </summary>
+        /// <value>The SQLiteDataAdapter.</value>
+        public SQLiteDataAdapter FoodnutrientDataAdapter
+            => (SQLiteDataAdapter)Components["FoodnutrientDataAdapter"];
         /// <summary>
         /// Gets the <see cref="SQLiteDataAdapter"/>.
         /// </summary>
@@ -152,6 +159,15 @@ namespace ahbsd.lib.Nutrients.Data
         }
 
         /// <summary>
+        /// Fills the DataSet with nutrients.foodnutrient data.
+        /// </summary>
+        /// <returns>The Amount of Rows.</returns>
+        public int FillFoodnutrient()
+        {
+            return FoodnutrientDataAdapter.Fill(DSNutrients, "foodnutrient");
+        }
+
+        /// <summary>
         /// Fills the DataSet with nutrients.food data.
         /// </summary>
         /// <returns>The Amount of Rows.</returns>
@@ -172,6 +188,7 @@ namespace ahbsd.lib.Nutrients.Data
             result += FillNutrients();
             result += FillProducer();
             result += FillFood();
+            result += FillFoodnutrient();
             result += FillVersion();
 
             return result;

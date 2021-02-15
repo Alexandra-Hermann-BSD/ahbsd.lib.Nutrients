@@ -39,13 +39,13 @@ namespace ahbsd.lib.Nutrients.Data
         public NutrientsDataSet(IContainer container)
             : base("DSNutrients")
         {
-            InitiateDS();
-
             if (container != null)
             {
                 container.Add(this, "DSNutrients");
             }
-            
+
+            InitiateDS();
+
         }
 
         /// <summary>
@@ -58,6 +58,7 @@ namespace ahbsd.lib.Nutrients.Data
             UnitTable Unit = new UnitTable(Container);
             ProducerTable Producer = new ProducerTable(Container);
             FoodTable Food = new FoodTable(Container);
+            FoodNutrientTable FoodNutrient = new FoodNutrientTable(Container);
             VersionTable Version = new VersionTable(Container);
 
             BeginInit();
@@ -67,6 +68,7 @@ namespace ahbsd.lib.Nutrients.Data
             Tables.Add(Unit);
             Tables.Add(Producer);
             Tables.Add(Food);
+            Tables.Add(FoodNutrient);
             Tables.Add(Version);
 
             DataRelation foodProducer = new DataRelation("fk_food_producer", Producer.PID, Food.ProducerID);
@@ -76,6 +78,8 @@ namespace ahbsd.lib.Nutrients.Data
             Relations.Add(versionFood);
 
             EndInit();
+
+            
         }
 
         #region implementation of INutrientsDataSet
@@ -99,6 +103,11 @@ namespace ahbsd.lib.Nutrients.Data
         /// </summary>
         /// <value>The <see cref="FoodTable"/> Food.</value>
         public FoodTable Food => (FoodTable)Tables["food"];
+        /// <summary>
+        /// Gets the <see cref="FoodTable"/> Food.
+        /// </summary>
+        /// <value>The <see cref="FoodTable"/> Food.</value>
+        public FoodNutrientTable FoodNutrient => (FoodNutrientTable)Tables["foodnutrient"];
         /// <summary>
         /// Gets the <see cref="VersionTable"/> Version.
         /// </summary>

@@ -59,6 +59,7 @@ namespace ahbsd.lib.Nutrients.Data
             DataColumn NutrientName = new DataColumn("name", typeof(string));
             DataColumn NutrientUnit = new DataColumn("unit", typeof(string));
             DataColumn NutrientAlternative = new DataColumn("Alternative", typeof(string));
+            DataColumn[] pk = new DataColumn[1];
 
             // Initialization Nutrient Table
             BeginInit();
@@ -68,20 +69,25 @@ namespace ahbsd.lib.Nutrients.Data
             Columns.Add(NutrientUnit);
             Columns.Add(NutrientAlternative);
 
-            Columns["nID"].AutoIncrement = true;
-            Columns["nID"].Caption = "ID";
+            NutrientID.AutoIncrement = true;
+            NutrientID.Caption = "ID";
 
-            Columns["name"].AllowDBNull = false;
-            Columns["name"].Caption = "Nutrient Name";
-            Columns["name"].MaxLength = 80;
+            NutrientName.AllowDBNull = false;
+            NutrientName.Caption = "Nutrient Name";
+            NutrientName.MaxLength = 80;
 
-            Columns["unit"].AllowDBNull = false;
-            Columns["unit"].Caption = "Unit";
-            Columns["unit"].MaxLength = 5;
+            NutrientUnit.AllowDBNull = false;
+            NutrientUnit.Caption = "Unit";
+            NutrientUnit.MaxLength = 5;
 
-            Columns["Alternative"].AllowDBNull = true;
-            Columns["Alternative"].Caption = "Alternative Name";
-            Columns["Alternative"].DefaultValue = DBNull.Value;
+            NutrientAlternative.AllowDBNull = true;
+            NutrientAlternative.Caption = "Alternative Name";
+            NutrientAlternative.DefaultValue = DBNull.Value;
+
+            pk[0] = NutrientID;
+
+            PrimaryKey = pk;
+
 
             EndInit();
         }

@@ -16,13 +16,35 @@ using System;
 using System.ComponentModel;
 namespace ahbsd.lib.Nutrients.Nutrient
 {
+    /// <summary>
+    /// Class for nutrisins versioning.
+    /// </summary>
     public class Version : Component, IVersion
     {
+        /// <summary>
+        /// The version ID.
+        /// </summary>
         private int vid;
+        /// <summary>
+        /// The food ID.
+        /// </summary>
         private int fid;
+        /// <summary>
+        /// The food with the <see cref="FID"/>.
+        /// </summary>
         private IFood food;
+        /// <summary>
+        /// The first Date this version was build.
+        /// </summary>
         private DateTime firstdate;
 
+        /// <summary>
+        /// Constructor without container.
+        /// </summary>
+        /// <param name="vID">The version ID.</param>
+        /// <param name="fID">The food ID.</param>
+        /// <param name="f">[optional] The food with the <see cref="FID"/>.</param>
+        /// <param name="firstDate">[optional] The first Date this version was build.</param>
         public Version(int vID, int fID, IFood f = null, DateTime? firstDate = null)
             : base()
         {
@@ -46,6 +68,14 @@ namespace ahbsd.lib.Nutrients.Nutrient
             }
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="vID">The version ID.</param>
+        /// <param name="fID">The food ID.</param>
+        /// <param name="container">The container.</param>
+        /// <param name="f">[optional] The food with the <see cref="FID"/>.</param>
+        /// <param name="firstDate">[optional] The first Date this version was build.</param>
         public Version(int vID, int fID, IContainer container, IFood f = null, DateTime? firstDate = null)
             : base()
         {
