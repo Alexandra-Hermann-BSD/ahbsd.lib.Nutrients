@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ahbsd.lib.Nutrients.Nutrient;
 using ahbsd.lib.Nutrients.Producer;
-using ahbsd.lib.Nutrients.Data.Creator;
 using ahbsd.lib.Tools;
 
 namespace ahbsd.lib.Nutrients.Test
@@ -18,7 +17,6 @@ namespace ahbsd.lib.Nutrients.Test
     {
         static void Main(string[] args)
         {
-            DBTool tool;
             SQLiteErrorCode liteErrorCode;
             NutrientsDataSet dsNutrients;
 
@@ -35,16 +33,6 @@ namespace ahbsd.lib.Nutrients.Test
             Console.WriteLine("Test");
             Console.WriteLine("====");
 
-            tool = new DBTool();
-
-            try
-            {
-                bool b = tool.CheckExistance();
-
-                Console.WriteLine($"tool returned {b}");
-            }
-            catch (Exception)
-            { }
 
             NutritionData data = new NutritionData();
 
