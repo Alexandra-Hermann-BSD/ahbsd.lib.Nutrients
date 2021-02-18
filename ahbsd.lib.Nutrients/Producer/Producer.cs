@@ -13,6 +13,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Sockets;
 using System.Text;
@@ -30,6 +31,15 @@ namespace ahbsd.lib.Nutrients.Producer
         private string _zip;
         private string _country;
         private Uri _website;
+
+        protected internal static IDictionary<int, IProducer> KnownProducers { get; private set; }
+
+        public static IProducer GetProducer(int id) => KnownProducers[id];
+
+        static Producer()
+        {
+            KnownProducers = new Dictionary<int, IProducer>();
+        }
 
         /// <summary>
         /// Constructor with ID, (Company) name, address, city, zip, country and a website..
@@ -111,6 +121,8 @@ namespace ahbsd.lib.Nutrients.Producer
             {
                 throw new Exception(errorMsg);
             }
+
+            KnownProducers.Add(id, this);
         }
 
         /// <summary>
@@ -199,6 +211,8 @@ namespace ahbsd.lib.Nutrients.Producer
             {
                 throw new Exception(errorMsg);
             }
+
+            KnownProducers.Add(id, this);
         }
 
         #region implementation of IProducer
@@ -349,5 +363,7 @@ namespace ahbsd.lib.Nutrients.Producer
 
             return stringBuilder.ToString();
         }
+
+        
     }
 }
