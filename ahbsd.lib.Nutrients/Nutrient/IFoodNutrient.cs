@@ -21,7 +21,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// <summary>
     /// Interface or FoodNutrient entry
     /// </summary>
-    public interface IFoodNutrient : IComponent
+    public interface IFoodNutrient : IComponent, IEquatable<IFoodNutrient>
     {
         /// <summary>
         /// Gets the food ID.
@@ -53,5 +53,15 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// </summary>
         /// <value>The unit.</value>
         IUnit Unit { get; }
+        /// <summary>
+        /// Adds a <see cref="IFoodNutrient"/>.
+        /// </summary>
+        /// <param name="nutrient">A <see cref="IFoodNutrient"/>.</param>
+        void AddNutrient(IFoodNutrient nutrient);
+        /// <summary>
+        /// Gets the HashCode of this object.
+        /// </summary>
+        /// <returns>The HashCode of this object.</returns>
+        int GetHashCode();
     }
 }

@@ -13,6 +13,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using ahbsd.lib.Nutrients.Measurement;
 
@@ -23,6 +24,13 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// </summary>
     public class FoodNutrient : Component, IFoodNutrient
     {
+        protected internal readonly static IDictionary<int, IFoodNutrient> KnownFoodNutrients;
+
+        static FoodNutrient()
+        {
+            KnownFoodNutrients = new Dictionary<int, IFoodNutrient>();
+        }
+
         /// <summary>
         /// Constructor for a FoodNutrient entry without container.
         /// </summary>
@@ -100,6 +108,78 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// </summary>
         /// <value>The unit.</value>
         public IUnit Unit { get; private set; }
+
+
+        /// <summary>
+        /// Gets the HashCode of this object.
+        /// </summary>
+        /// <returns>The HashCode of this object.</returns>
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(CanRaiseEvents);
+            hash.Add(Container);
+            hash.Add(DesignMode);
+            hash.Add(Events);
+            hash.Add(Site);
+            hash.Add(KnownFoodNutrients);
+            hash.Add(FID);
+            hash.Add(NID);
+            hash.Add(VID);
+            hash.Add(Amount);
+            hash.Add(Per);
+            hash.Add(Unit);
+            return hash.ToHashCode();
+        }
+
+        /// <summary>
+        /// Adds a <see cref="IFoodNutrient"/>.
+        /// </summary>
+        /// <param name="nutrient">A <see cref="IFoodNutrient"/>.</param>
+        public void AddNutrient(IFoodNutrient nutrient)
+        {
+            int hashCode = nutrient.GetHashCode();
+
+            if (!KnownFoodNutrients.ContainsKey(hashCode))
+            {
+                KnownFoodNutrients.Add(hashCode, nutrient);
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as IFoodNutrient);
+        }
+
+        public bool Equals(IFoodNutrient other)
+        {
+            return other != null &&
+                   FID == other.FID &&
+                   NID == other.NID &&
+                   VID == other.VID &&
+                   Amount == other.Amount &&
+                   Per == other.Per &&
+                   EqualityComparer<IUnit>.Default.Equals(Unit, other.Unit);
+        }
         #endregion
+
+        public static IFoodNutrient GetFoodNutrient(int fID, int vID, int nID)
+        {
+            IFoodNutrient result = null;
+            IFoodNutrient tmp;
+
+            foreach (KeyValuePair<int, IFoodNutrient> fn in KnownFoodNutrients)
+            {
+                tmp = fn.Value;
+
+                if (tmp.FID == fID && tmp.VID == vID && tmp.NID == nID)
+                {
+                    result = fn.Value;
+                    break;
+                }
+            }
+
+            return result;
+        }
     }
 }
