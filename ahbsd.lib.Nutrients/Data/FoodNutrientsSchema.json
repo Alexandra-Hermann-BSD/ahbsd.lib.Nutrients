@@ -1,0 +1,687 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "Name": "My Hummus",
+            "Version": 1.0,
+            "FirstDate": "2021-02-01",
+            "DefaultAmount": 100.0,
+            "DefaultMeasurement": "g",
+            "NutrientValues": {
+                "Biotin": null,
+                "Caffeine": null,
+                "Calcium": 49.0,
+                "Carbohydrates": 27.6,
+                "Chloride": null,
+                "Cholesterol": null,
+                "Chromium": null,
+                "Copper": 0.35,
+                "FatMonosaturated": 0.6,
+                "FatPolysaturated": 1.2,
+                "FatSaturated": 0.3,
+                "Fiber": 7.6,
+                "Folate": 171.0,
+                "Iodine": null,
+                "Iron": 2.9,
+                "Magnesium": 49.0,
+                "Manganese": 1.04,
+                "Molybdenum": null,
+                "Niacin": 0.5,
+                "PantotenicAcid": 0.3,
+                "Phosphorus": 168,
+                "Potassium": 294.0,
+                "Protein": 8.9,
+                "Riboflavin": 0.06,
+                "Selenium": 4.0,
+                "Sodium": 110.0,
+                "Sugar": 5.0,
+                "Thiamin": 0.12,
+                "VitaminA": 101.0,
+                "VitaminB12": null,
+                "VitaminB6": 0.14,
+                "VitaminC": 1.0,
+                "VitaminD": null,
+                "VitaminE": 0.4,
+                "VitaminK": 4.0,
+                "Water": 5.0,
+                "Zinc": 1.5,
+                "Alcohol": null,
+                "Energy": 165
+            }
+        }
+    ],
+    "required": [
+        "Name",
+        "Version",
+        "FirstDate",
+        "DefaultAmount",
+        "DefaultMeasurement",
+        "NutrientValues"
+    ],
+    "properties": {
+        "Name": {
+            "$id": "#/properties/Name",
+            "default": "",
+            "description": "The name of the food, for which the nutrients are saved.",
+            "examples": [
+                "My Hummus"
+            ],
+            "title": "The name of the food",
+            "type": "string"
+        },
+        "Version": {
+            "$id": "#/properties/Version",
+            "default": 1.0,
+            "description": "Nutrients of a food change from time to time. So versioning is quite useful.",
+            "examples": [
+                1.0
+            ],
+            "title": "The version of the food.",
+            "type": "number"
+        },
+        "FirstDate": {
+            "$id": "#/properties/FirstDate",
+            "default": "",
+            "description": "The first date, when this version was marked.",
+            "examples": [
+                "2021-02-01 14:00:01"
+            ],
+            "title": "The first date the Version was seen.",
+            "type": "string"
+        },
+        "DefaultAmount": {
+            "$id": "#/properties/DefaultAmount",
+            "default": 100.0,
+            "description": "The default amount in gram or mililiter the food nutrients are measured for. Usually 100 gram or 100 mililiter.",
+            "examples": [
+                100.0
+            ],
+            "title": "The default amount.",
+            "exclusiveMinimum": 0.0,
+            "type": "number"
+        },
+        "DefaultMeasurement": {
+            "$id": "#/properties/DefaultMeasurement",
+            "default": "g",
+            "description": "The measurement of the default amount.",
+            "examples": [
+                "g"
+            ],
+            "title": "The measurement of the default amount.",
+            "enum": [
+                "g",
+                "ml"
+            ],
+            "type": "string"
+        },
+        "NutrientValues": {
+            "$id": "#/properties/NutrientValues",
+            "default": {},
+            "description": "The nutrients in the food. If not available: null",
+            "examples": [
+                {
+                    "Biotin": null,
+                    "Caffeine": null,
+                    "Calcium": 49.0,
+                    "Carbohydrates": 27.6,
+                    "Chloride": null,
+                    "Cholesterol": null,
+                    "Chromium": null,
+                    "Copper": 0.35,
+                    "FatMonosaturated": 0.6,
+                    "FatPolysaturated": 1.2,
+                    "FatSaturated": 0.3,
+                    "Fiber": 7.6,
+                    "Folate": 171.0,
+                    "Iodine": null,
+                    "Iron": 2.9,
+                    "Magnesium": 49.0,
+                    "Manganese": 1.04,
+                    "Molybdenum": null,
+                    "Niacin": 0.5,
+                    "PantotenicAcid": 0.3,
+                    "Phosphorus": 168,
+                    "Potassium": 294.0,
+                    "Protein": 8.9,
+                    "Riboflavin": 0.06,
+                    "Selenium": 4.0,
+                    "Sodium": 110.0,
+                    "Sugar": 5.0,
+                    "Thiamin": 0.12,
+                    "VitaminA": 101.0,
+                    "VitaminB12": null,
+                    "VitaminB6": 0.14,
+                    "VitaminC": 1.0,
+                    "VitaminD": null,
+                    "VitaminE": 0.4,
+                    "VitaminK": 4.0,
+                    "Water": 5.0,
+                    "Zinc": 1.5,
+                    "Alcohol": null,
+                    "Energy": 165
+                }
+            ],
+            "required": [
+                "Biotin",
+                "Caffeine",
+                "Calcium",
+                "Carbohydrates",
+                "Chloride",
+                "Cholesterol",
+                "Chromium",
+                "Copper",
+                "FatMonosaturated",
+                "FatPolysaturated",
+                "FatSaturated",
+                "Fiber",
+                "Folate",
+                "Iodine",
+                "Iron",
+                "Magnesium",
+                "Manganese",
+                "Molybdenum",
+                "Niacin",
+                "PantotenicAcid",
+                "Phosphorus",
+                "Potassium",
+                "Protein",
+                "Riboflavin",
+                "Selenium",
+                "Sodium",
+                "Sugar",
+                "Thiamin",
+                "VitaminA",
+                "VitaminB12",
+                "VitaminB6",
+                "VitaminC",
+                "VitaminD",
+                "VitaminE",
+                "VitaminK",
+                "Water",
+                "Zinc",
+                "Alcohol",
+                "Energy"
+            ],
+            "title": "The nutrients in the food.",
+            "maxItems": 40,
+            "minItems": 40,
+            "type": "object",
+            "properties": {
+                "Biotin": {
+                    "$id": "#/properties/NutrientValues/properties/Biotin",
+                    "default": null,
+                    "examples": [
+                        0.5
+                    ],
+                    "title": "The amount of biotin in µg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Caffeine": {
+                    "$id": "#/properties/NutrientValues/properties/Caffeine",
+                    "default": null,
+                    "examples": [
+                        10.0
+                    ],
+                    "title": "The amount of caffeine in mg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Calcium": {
+                    "$id": "#/properties/NutrientValues/properties/Calcium",
+                    "default": null,
+                    "examples": [
+                        49.0
+                    ],
+                    "title": "The amount of calcium in mg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Carbohydrates": {
+                    "$id": "#/properties/NutrientValues/properties/Carbohydrates",
+                    "default": null,
+                    "examples": [
+                        27.6
+                    ],
+                    "title": "The amount of carbohydrates in g",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Chloride": {
+                    "$id": "#/properties/NutrientValues/properties/Chloride",
+                    "default": null,
+                    "examples": [
+                        60
+                    ],
+                    "title": "The amount of chloride in mg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Cholesterol": {
+                    "$id": "#/properties/NutrientValues/properties/Cholesterol",
+                    "default": null,
+                    "examples": [
+                        15.8
+                    ],
+                    "title": "The amount of cholesterol in mg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Chromium": {
+                    "$id": "#/properties/NutrientValues/properties/Chromium",
+                    "default": null,
+                    "examples": [
+                        0.0024
+                    ],
+                    "title": "The amount of chromium in µg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Copper": {
+                    "$id": "#/properties/NutrientValues/properties/Copper",
+                    "default": null,
+                    "examples": [
+                        0.35
+                    ],
+                    "title": "The amount of copper in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "FatMonosaturated": {
+                    "$id": "#/properties/NutrientValues/properties/FatMonosaturated",
+                    "default": null,
+                    "examples": [
+                        0.6
+                    ],
+                    "title": "The amount of monosaturated fat in g",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "FatPolysaturated": {
+                    "$id": "#/properties/NutrientValues/properties/FatPolysaturated",
+                    "default": null,
+                    "examples": [
+                        1.2
+                    ],
+                    "title": "The amount of polysaturated fat in g",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "FatSaturated": {
+                    "$id": "#/properties/NutrientValues/properties/FatSaturated",
+                    "default": null,
+                    "examples": [
+                        0.3
+                    ],
+                    "title": "The amount of saturated fat in g",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Fiber": {
+                    "$id": "#/properties/NutrientValues/properties/Fiber",
+                    "default": null,
+                    "examples": [
+                        7.6
+                    ],
+                    "title": "The amount of fiber in g",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Folate": {
+                    "$id": "#/properties/NutrientValues/properties/Folate",
+                    "default": null,
+                    "examples": [
+                        171.0
+                    ],
+                    "title": "The amount of folate in µg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Iodine": {
+                    "$id": "#/properties/NutrientValues/properties/Iodine",
+                    "default": null,
+                    "examples": [
+                        0.1
+                    ],
+                    "title": "The amount of iodine in µg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Iron": {
+                    "$id": "#/properties/NutrientValues/properties/Iron",
+                    "default": null,
+                    "examples": [
+                        2.9
+                    ],
+                    "title": "The amount of iron in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Magnesium": {
+                    "$id": "#/properties/NutrientValues/properties/Magnesium",
+                    "default": null,
+                    "examples": [
+                        49.0
+                    ],
+                    "title": "The amount of magnesium in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Manganese": {
+                    "$id": "#/properties/NutrientValues/properties/Manganese",
+                    "default": null,
+                    "examples": [
+                        1.04
+                    ],
+                    "title": "The amount of manganese in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Molybdenum": {
+                    "$id": "#/properties/NutrientValues/properties/Molybdenum",
+                    "default": null,
+                    "examples": [
+                        0.00102
+                    ],
+                    "title": "The amount of molybdenum in µg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Niacin": {
+                    "$id": "#/properties/NutrientValues/properties/Niacin",
+                    "default": null,
+                    "examples": [
+                        0.5
+                    ],
+                    "title": "The amount of niacin in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "PantotenicAcid": {
+                    "$id": "#/properties/NutrientValues/properties/PantotenicAcid",
+                    "default": null,
+                    "examples": [
+                        0.3
+                    ],
+                    "title": "The amount of pantotenic acid in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Phosphorus": {
+                    "$id": "#/properties/NutrientValues/properties/Phosphorus",
+                    "default": null,
+                    "examples": [
+                        168
+                    ],
+                    "title": "The amount of phosphorus in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Potassium": {
+                    "$id": "#/properties/NutrientValues/properties/Potassium",
+                    "default": null,
+                    "examples": [
+                        294.0
+                    ],
+                    "title": "The amount of potassium in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Protein": {
+                    "$id": "#/properties/NutrientValues/properties/Protein",
+                    "default": null,
+                    "examples": [
+                        8.9
+                    ],
+                    "title": "The amount of protein in g",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Riboflavin": {
+                    "$id": "#/properties/NutrientValues/properties/Riboflavin",
+                    "default": null,
+                    "examples": [
+                        0.06
+                    ],
+                    "title": "The amount of riboflavin in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Selenium": {
+                    "$id": "#/properties/NutrientValues/properties/Selenium",
+                    "default": null,
+                    "examples": [
+                        4.0
+                    ],
+                    "title": "The amount of selenium in µg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Sodium": {
+                    "$id": "#/properties/NutrientValues/properties/Sodium",
+                    "default": null,
+                    "examples": [
+                        110.0
+                    ],
+                    "title": "The amount of sodium in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Sugar": {
+                    "$id": "#/properties/NutrientValues/properties/Sugar",
+                    "default": null,
+                    "examples": [
+                        5.0
+                    ],
+                    "title": "The amount of sugar in g",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Thiamin": {
+                    "$id": "#/properties/NutrientValues/properties/Thiamin",
+                    "default": null,
+                    "examples": [
+                        0.12
+                    ],
+                    "title": "The amount of thiamin in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "VitaminA": {
+                    "$id": "#/properties/NutrientValues/properties/VitaminA",
+                    "default": null,
+                    "examples": [
+                        101.0
+                    ],
+                    "title": "The amount of vitamin A in µg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "VitaminB12": {
+                    "$id": "#/properties/NutrientValues/properties/VitaminB12",
+                    "default": null,
+                    "examples": [
+                        0.5
+                    ],
+                    "title": "The amount of vitamin B12 in µg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "VitaminB6": {
+                    "$id": "#/properties/NutrientValues/properties/VitaminB6",
+                    "default": null,
+                    "examples": [
+                        0.14
+                    ],
+                    "title": "The amount of vitamin B6 in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "VitaminC": {
+                    "$id": "#/properties/NutrientValues/properties/VitaminC",
+                    "default": null,
+                    "examples": [
+                        1.0
+                    ],
+                    "title": "The amount of vitamin C in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "VitaminD": {
+                    "$id": "#/properties/NutrientValues/properties/VitaminD",
+                    "default": null,
+                    "examples": [
+                        0.01
+                    ],
+                    "title": "The amount of vitamin D in µg",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "VitaminE": {
+                    "$id": "#/properties/NutrientValues/properties/VitaminE",
+                    "default": null,
+                    "examples": [
+                        0.4
+                    ],
+                    "title": "The amount of vitamin E in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "VitaminK": {
+                    "$id": "#/properties/NutrientValues/properties/VitaminK",
+                    "default": null,
+                    "examples": [
+                        4.0
+                    ],
+                    "title": "The amount of vitamin K in µg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Water": {
+                    "$id": "#/properties/NutrientValues/properties/Water",
+                    "default": null,
+                    "examples": [
+                        5.0
+                    ],
+                    "title": "The amount of water in g/ml",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Zinc": {
+                    "$id": "#/properties/NutrientValues/properties/Zinc",
+                    "default": null,
+                    "examples": [
+                        1.5
+                    ],
+                    "title": "The amount of zinc in mg",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "Alcohol": {
+                    "$id": "#/properties/NutrientValues/properties/Alcohol",
+                    "default": null,
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        5
+                    ],
+                    "title": "The amount of alcohol in g",
+                    "type": [
+                        "null",
+                        "number"
+                    ]
+                },
+                "Energy": {
+                    "$id": "#/properties/NutrientValues/properties/Energy",
+                    "default": 0.001,
+                    "examples": [
+                        165
+                    ],
+                    "title": "The amount of energy in kcal.",
+                    "exclusiveMinimum": 0,
+                    "type": "number"
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": true
+}

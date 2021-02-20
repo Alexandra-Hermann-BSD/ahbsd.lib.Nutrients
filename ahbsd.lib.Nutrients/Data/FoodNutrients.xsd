@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="fn"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty"
+           xmlns:fn="foodnutrients">
+  <xs:element name="food">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="fn:defaultAmount"/>
+
+        <xs:element ref="fn:energy"/>
+
+        <xs:element maxOccurs="unbounded" ref="fn:nutrients"/>
+      </xs:sequence>
+
+      <xs:attribute name="firstdate" use="required"/>
+
+      <xs:attribute name="id" type="xs:integer" use="required"/>
+
+      <xs:attribute name="name" type="xs:NCName" use="required"/>
+
+      <xs:attribute name="version" type="xs:decimal" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="defaultAmount">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:decimal">
+          <xs:attribute name="weight_measurement" type="xs:NCName"
+                        use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="energy">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:integer">
+          <xs:attribute name="energy_maesurement" type="xs:NCName"
+                        use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="nutrients">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="fn:nutrient"/>
+      </xs:sequence>
+
+      <xs:attribute name="name" type="xs:NCName"/>
+
+      <xs:attribute name="type" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="nutrient">
+    <xs:complexType mixed="true">
+      <xs:attribute name="alt"/>
+
+      <xs:attribute name="name" use="required"/>
+
+      <xs:attribute name="weight_measurement" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

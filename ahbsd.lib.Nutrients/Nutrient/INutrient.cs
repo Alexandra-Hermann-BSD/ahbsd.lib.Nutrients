@@ -25,7 +25,7 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// <remarks>
     /// The default measurements are in SI, for optional measurements the
     /// formulas must be defined in other classes.
-    /// <seealso cref="Measurement"/>.
+    /// <seealso cref="lib.Nutrients.Measurement"/>.
     /// The default names are international as well.
     /// </remarks>
     public interface INutrient : IComponent

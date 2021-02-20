@@ -19,9 +19,6 @@
 //    using ahbsd.lib.Nutrients.Nutrient;
 //
 //    var nutrients = Nutrients.FromJson(jsonString);
-using System;
-using System.Collections.Generic;
-
 using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -339,26 +336,26 @@ namespace ahbsd.lib.Nutrients.Nutrient
         /// </summary>
         /// <param name="json">The json string.</param>
         /// <returns>A nutrients object with the translated nutrients.</returns>
-        public static Nutrients FromJson(string json) => JsonConvert.DeserializeObject<Nutrients>(json, ahbsd.lib.Nutrients.Nutrient.Converter.Settings);
+        public static Nutrients FromJson(string json) => JsonConvert.DeserializeObject<Nutrients>(json, ahbsd.lib.Nutrients.Nutrient.FoodNutrientsConverter.Settings);
     }
 
     /// <summary>
     /// Serialization-Class.
     /// </summary>
-    public static class Serialize
+    public static class NutrientsSerialize
     {
         /// <summary>
         /// Static function to set the translation json string from a nutrients object.
         /// </summary>
         /// <param name="self">The <see cref="Nutrients"/> object.</param>
         /// <returns>The json string.</returns>
-        public static string ToJson(this Nutrients self) => JsonConvert.SerializeObject(self, ahbsd.lib.Nutrients.Nutrient.Converter.Settings);
+        public static string ToJson(this Nutrients self) => JsonConvert.SerializeObject(self, ahbsd.lib.Nutrients.Nutrient.FoodNutrientsConverter.Settings);
     }
 
     /// <summary>
     /// A converter class.
     /// </summary>
-    internal static class Converter
+    internal static class FoodNutrientsConverter
     {
         /// <summary>
         /// Static Settings.

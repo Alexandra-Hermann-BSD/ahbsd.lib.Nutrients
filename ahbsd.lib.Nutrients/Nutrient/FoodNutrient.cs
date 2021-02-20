@@ -24,6 +24,9 @@ namespace ahbsd.lib.Nutrients.Nutrient
     /// </summary>
     public class FoodNutrient : Component, IFoodNutrient
     {
+        /// <summary>
+        /// A static Dictionary with already known <see cref="IFoodNutrients"/>.
+        /// </summary>
         protected internal readonly static IDictionary<int, IFoodNutrient> KnownFoodNutrients;
 
         static FoodNutrient()
@@ -146,6 +149,11 @@ namespace ahbsd.lib.Nutrients.Nutrient
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             return Equals(obj as IFoodNutrient);
