@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fn:food firstdate="2021-02-18 12:00:01" id="1" name="MyHummus" version="1.0"
+         fn:schemaLocation="FoodNutrients.xsd" xmlns:fn="foodnutrients">
+  <fn:defaultAmount weight_measurement="g">100.0</fn:defaultAmount>
+
+  <fn:energy energy_maesurement="kcal">165</fn:energy>
+
+  <fn:nutrients type="fats">
+    <fn:nutrient name="Total Fat" weight_measurement="g">2.6</fn:nutrient>
+
+    <fn:nutrient name="Saturated Fat" weight_measurement="g">0.3</fn:nutrient>
+
+    <fn:nutrient name="Polisaturated Fat"
+    weight_measurement="g">1.2</fn:nutrient>
+
+    <fn:nutrient name="Monosaturated Fat"
+    weight_measurement="g">0.6</fn:nutrient>
+
+    <fn:nutrient name="Trans Fat" weight_measurement="g"/>
+
+    <fn:nutrient name="Cholesterol" weight_measurement="mg"/>
+  </fn:nutrients>
+
+  <fn:nutrients type="Protein">
+    <fn:nutrient name="Protein" weight_measurement="g">8.9</fn:nutrient>
+  </fn:nutrients>
+
+  <fn:nutrients type="Carbohydrates">
+    <fn:nutrient name="Total Carbohydrates"
+    weight_measurement="g">27.6</fn:nutrient>
+
+    <fn:nutrient name="Dietary Fiber" weight_measurement="g">7.6</fn:nutrient>
+
+    <fn:nutrient name="Total Sugars" weight_measurement="g">5.0</fn:nutrient>
+
+    <fn:nutrient name="Net Carbs" weight_measurement="g">20.0</fn:nutrient>
+  </fn:nutrients>
+
+  <fn:nutrients name="Minerals">
+    <fn:nutrient name="Sodium" weight_measurement="mg">110.0</fn:nutrient>
+
+    <fn:nutrient name="Selenium" weight_measurement="µg">4.0</fn:nutrient>
+
+    <fn:nutrient name="Zinc" weight_measurement="mg">1.5</fn:nutrient>
+
+    <fn:nutrient name="Potassium" weight_measurement="mg">294.0</fn:nutrient>
+
+    <fn:nutrient name="Calcium" weight_measurement="mg">49.0</fn:nutrient>
+
+    <fn:nutrient name="Iron" weight_measurement="mg">2.9</fn:nutrient>
+
+    <fn:nutrient name="Copper" weight_measurement="mg">0.35</fn:nutrient>
+
+    <fn:nutrient name="Magnesium" weight_measurement="mg">48.0</fn:nutrient>
+
+    <fn:nutrient name="Manganese" weight_measurement="mg">1.04</fn:nutrient>
+
+    <fn:nutrient name="Phosphorus" weight_measurement="mg">168.0</fn:nutrient>
+
+    <fn:nutrient name="Chlorid" weight_measurement="mg"/>
+
+    <fn:nutrient name="Chromium" weight_measurement="µg"/>
+
+    <fn:nutrient name="Iod" weight_measurement="µg"/>
+
+    <fn:nutrient name="Molybdenium" weight_measurement="µg"/>
+  </fn:nutrients>
+
+  <fn:nutrients type="Vitamins">
+    <fn:nutrient name="Vitamin A" weight_measurement="µg">101.0</fn:nutrient>
+
+    <fn:nutrient name="Vitamin E" weight_measurement="mg">0.4</fn:nutrient>
+
+    <fn:nutrient name="Vitamin K" weight_measurement="µg">4.0</fn:nutrient>
+
+    <fn:nutrient alt="Thiamin" name="Vitamin B1"
+    weight_measurement="mg">0.12</fn:nutrient>
+
+    <fn:nutrient name="Vitamin B6" weight_measurement="mg">0.14</fn:nutrient>
+
+    <fn:nutrient name="Vitamin C" weight_measurement="mg">1.0</fn:nutrient>
+
+    <fn:nutrient name="Vitamin D" weight_measurement="µg"/>
+
+    <fn:nutrient name="Riboflavin" weight_measurement="mg">0.06</fn:nutrient>
+
+    <fn:nutrient name="Niacin" weight_measurement="mg">0.5</fn:nutrient>
+
+    <fn:nutrient name="Folate" weight_measurement="µg">171.0</fn:nutrient>
+
+    <fn:nutrient alt="Pantotenic Acid" name="Vitamin B5"
+    weight_measurement="mg">0.3</fn:nutrient>
+
+    <fn:nutrient alt="Biotin" name="Vitamin B7" weight_measurement="µg"/>
+  </fn:nutrients>
+
+  <fn:nutrients type="Rest">
+    <fn:nutrient name="Caffeine" weight_measurement="mg"/>
+
+    <fn:nutrient name="Alcohol" weight_measurement="g"/>
+  </fn:nutrients>
+</fn:food>

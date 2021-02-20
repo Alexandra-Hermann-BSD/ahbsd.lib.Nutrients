@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Name</key>
+	<string>FoodNutrients</string>
+	<key>SchemaVersion</key>
+	<string>1.9.4 20200706</string>
+	<key>Windows</key>
+	<array>
+		<dict>
+			<key>WindowWithTabs</key>
+			<dict>
+				<key>SelectedURL</key>
+				<string>file:///Users/alexanderhermann/Projects/ahbsd.lib.Nutrients/ahbsd.lib.Nutrients/Data/FoodNutrients.xsd</string>
+				<key>URLs</key>
+				<array>
+					<string>file:///Users/alexanderhermann/Projects/ahbsd.lib.Nutrients/ahbsd.lib.Nutrients/Data/MyHummus.xml</string>
+					<string>file:///Users/alexanderhermann/Projects/ahbsd.lib.Nutrients/ahbsd.lib.Nutrients/Data/FoodNutrients.xsd</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
