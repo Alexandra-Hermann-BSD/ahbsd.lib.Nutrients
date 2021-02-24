@@ -2,7 +2,7 @@
 A library project for nutrients in Core3.1
 
 ## The reason for YANL (Yet Another Nutrition Library
-Each of the nutrition APPs thaat I used hat pro's and contra's. Most I want is
+Each of the nutrition APPs that I used had pro's and contra's. Most I want is
 
 1. As much of nutrients, my iPhone can save in HealthKit
 2. A versioning of Foods. Because the amount of ingredients change and changing 
